@@ -5,14 +5,14 @@
 const SUPABASE_URL = 'https://woagfgjsbmxeizglomfh.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 
-// Wait for supabase CDN to be ready
+// Supabase client
 var supabase;
-function getSupabase() {
-  if (!supabase) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
-  return supabase;
+try {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} catch(e) {
+  console.error('Supabase init error:', e);
 }
+function getSupabase() { return supabase; }
 
 // ---- Auth Guard ----
 async function requireAuth() {
@@ -28,7 +28,7 @@ async function getUser() {
 }
 
 function doLogout() {
-  getSupabase().auth.signOut().then(() => { window.location.href = 'index.html'; });
+  supabase.auth.signOut().then(() => { window.location.href = 'index.html'; });
 }
 
 // ---- Formatters ----
