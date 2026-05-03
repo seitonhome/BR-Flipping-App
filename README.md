@@ -32,7 +32,7 @@ También actualiza las mismas variables en `index.html` (líneas del script al f
 **Opción A — Drag & Drop (más fácil):**
 1. Ve a https://vercel.com, crea cuenta
 2. En el dashboard haz click en "Add New > Project"
-3. Selecciona "Browse" y sube la carpeta `flipcol` completa
+3. Selecciona "Browse" y sube la carpeta `BR-Flipping-App` completa
 4. Click en Deploy → ¡listo!
 
 **Opción B — GitHub:**
@@ -48,7 +48,7 @@ En Vercel puedes agregar tu propio dominio en Settings > Domains.
 ## 📁 Estructura de archivos
 
 ```
-flipcol/
+BR-Flipping-App/
 ├── index.html          ← Login / Registro
 ├── dashboard.html      ← Panel principal con KPIs y gráficas
 ├── calculadora.html    ← Calculadora paso a paso con análisis fiscal
