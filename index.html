@@ -183,8 +183,7 @@ function initApp() {
   sb.auth.getSession().then(function(res) {
     var session = res.data.session;
     if (!session) return;
-    if (session.user.email === ADMIN) showAdmin();
-    else window.location.href = 'dashboard.html';
+    window.location.href = 'dashboard.html';
   });
 
   // Boton login
@@ -238,12 +237,7 @@ function doLogin() {
       btn.disabled = false; btn.textContent = 'Entrar al panel';
       return;
     }
-    if (res.data.user.email === ADMIN) {
-      btn.disabled = false; btn.textContent = 'Entrar al panel';
-      showAdmin();
-    } else {
-      window.location.href = 'dashboard.html';
-    }
+    window.location.href = 'dashboard.html';
   }).catch(function(e) {
     showMsg('msg-login', 'Error de conexion: ' + e.message, 'error');
     btn.disabled = false; btn.textContent = 'Entrar al panel';
