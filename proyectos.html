@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/png;base64,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" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&R Inversiones — Proyectos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/app.js"></script>
+<style>
+.filter-bar { display:flex;gap:10px;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap; }
+.filter-chip { padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border-dim);background:var(--dark3);color:var(--text-muted);transition:all 0.15s; }
+.filter-chip.active { border-color:var(--gold);background:var(--gold-pale);color:var(--gold); }
+.filter-chip:hover:not(.active) { border-color:var(--border-mid);color:var(--text); }
+.search-box { flex:1;min-width:200px; }
+.search-box input { height:36px;padding:0 12px 0 36px;background:var(--dark3);border:1px solid var(--border-dim);border-radius:20px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;width:100%; }
+.search-box input:focus { border-color:var(--gold); }
+.search-wrap { position:relative; }
+.search-icon { position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-dim); }
+
+.project-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem; }
+
+.proj-card {
+  background:var(--dark3);border:1px solid var(--border-dim);border-radius:var(--radius);
+  padding:1.25rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;
+}
+.proj-card::after { content:'';position:absolute;inset:0;border-radius:var(--radius);opacity:0;background:rgba(201,168,76,0.04);transition:opacity 0.2s; }
+.proj-card:hover { border-color:var(--border);transform:translateY(-2px); }
+.proj-card:hover::after { opacity:1; }
+.proj-card-accent { position:absolute;top:0;left:0;right:0;height:3px; }
+.proj-card[data-e="evaluacion"] .proj-card-accent { background:var(--info); }
+.proj-card[data-e="comprado"] .proj-card-accent { background:var(--gold); }
+.proj-card[data-e="remodelacion"] .proj-card-accent { background:var(--warning); }
+.proj-card[data-e="en_venta"] .proj-card-accent { background:#A585E8; }
+.proj-card[data-e="vendido"] .proj-card-accent { background:var(--success); }
+.proj-card[data-e="cancelado"] .proj-card-accent { background:var(--danger); }
+
+.proj-header { display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px; }
+.proj-name { font-family:'Syne',sans-serif;font-size:16px;font-weight:600; }
+.proj-addr { font-size:12px;color:var(--text-dim);margin-top:2px; }
+.proj-metrics { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px; }
+.pm { background:var(--dark4);border-radius:8px;padding:10px; }
+.pm-lbl { font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px; }
+.pm-val { font-family:'Syne',sans-serif;font-size:16px;font-weight:600; }
+.pm-val.pos { color:var(--success); }
+.pm-val.neg { color:var(--danger); }
+.pm-val.gold { color:var(--gold); }
+
+.proj-progress { margin-top:12px; }
+.progress-stages { display:flex;gap:3px;margin-top:6px; }
+.stage-dot { flex:1;height:4px;border-radius:2px;background:var(--dark5); }
+
+/* Modal detail styles */
+.detail-section { margin-bottom:1.5rem; }
+.detail-section-title { font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;font-weight:500; }
+.detail-row { display:flex;padding:7px 0;border-bottom:1px solid var(--border-dim);font-size:13px; }
+.detail-row:last-child { border-bottom:none; }
+.detail-label { flex:1;color:var(--text-muted); }
+.detail-val { font-weight:500;color:var(--text); }
+
+.status-timeline { display:flex;gap:0;margin:1rem 0; }
+.stage { flex:1;text-align:center;position:relative; }
+.stage::before { content:'';position:absolute;top:11px;left:-50%;right:50%;height:2px;background:var(--dark5); }
+.stage:first-child::before { display:none; }
+.stage-dot2 { width:24px;height:24px;border-radius:50%;background:var(--dark5);border:2px solid var(--dark4);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:10px;position:relative;z-index:1;transition:all 0.3s; }
+.stage.done .stage-dot2 { background:var(--success);border-color:var(--success);color:#fff; }
+.stage.done::before { background:var(--success); }
+.stage.current .stage-dot2 { background:var(--gold);border-color:var(--gold);color:var(--dark); }
+.stage-lbl { font-size:10px;color:var(--text-dim); }
+.stage.done .stage-lbl, .stage.current .stage-lbl { color:var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="logo-mark">FC</div><div class="logo-text">Flip<span>Col</span></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Principal</div>
+      <button class="nav-item" onclick="location.href='dashboard.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+      <button class="nav-item active" onclick="location.href='proyectos.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>Proyectos</button>
+      <button class="nav-item" onclick="location.href='calculadora.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>Calculadora</button>
+      <div class="nav-label">Reportes</div>
+      <button class="nav-item" onclick="location.href='reportes.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Reportes & KPIs</button>
+    </nav>
+    <div class="sidebar-footer"><div class="user-card" onclick="doLogout()"><div class="user-avatar" id="user-av">?</div><div><div class="user-name" id="user-nm">Cargando...</div><div class="user-role">Cerrar sesión</div></div></div></div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Proyectos</div>
+      <div class="topbar-actions">
+        <span class="text-muted text-sm" id="count-label">0 proyectos</span>
+        <button class="btn btn-gold" onclick="location.href='calculadora.html'">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo proyecto
+        </button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="filter-bar">
+        <div class="search-wrap search-box">
+          <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Buscar proyecto..." id="search-inp" oninput="filterProyectos()">
+        </div>
+        <button class="filter-chip active" data-f="todos" onclick="setFilter(this,'todos')">Todos</button>
+        <button class="filter-chip" data-f="evaluacion" onclick="setFilter(this,'evaluacion')">Evaluación</button>
+        <button class="filter-chip" data-f="comprado" onclick="setFilter(this,'comprado')">Comprado</button>
+        <button class="filter-chip" data-f="remodelacion" onclick="setFilter(this,'remodelacion')">Remodelación</button>
+        <button class="filter-chip" data-f="en_venta" onclick="setFilter(this,'en_venta')">En venta</button>
+        <button class="filter-chip" data-f="vendido" onclick="setFilter(this,'vendido')">Vendido</button>
+      </div>
+
+      <div class="project-grid" id="proj-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--text-dim)">Cargando proyectos...</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL DETAIL -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal" style="max-width:860px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="m-nombre">Proyecto</div>
+        <div class="text-muted text-sm" id="m-addr"></div>
+      </div>
+      <span id="m-badge"></span>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal()" style="margin-left:auto;">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Timeline -->
+      <div class="status-timeline" id="m-timeline"></div>
+      <div class="divider"></div>
+
+      <!-- Update Estado -->
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:1.5rem;">
+        <label style="font-size:13px;color:var(--text-muted);white-space:nowrap;">Actualizar estado:</label>
+        <select id="m-estado-sel" style="flex:1;height:36px;padding:0 10px;background:var(--dark4);border:1px solid var(--border-dim);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
+          <option value="evaluacion">Evaluación</option>
+          <option value="comprado">Comprado</option>
+          <option value="remodelacion">En remodelación</option>
+          <option value="en_venta">En venta</option>
+          <option value="vendido">Vendido</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+        <input type="number" id="m-precio-real" placeholder="Precio venta real (si vendido)" style="flex:1.5;height:36px;padding:0 10px;background:var(--dark4);border:1px solid var(--border-dim);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;" oninput="">
+        <button class="btn btn-gold btn-sm" onclick="updateEstado()">Guardar cambio</button>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="detail-section-title">Financiero</div>
+          <div id="m-financiero"></div>
+        </div>
+        <div>
+          <div class="detail-section-title">KPIs del proyecto</div>
+          <div id="m-kpis"></div>
+        </div>
+      </div>
+      <div class="divider-sm"></div>
+      <div class="detail-section-title">Detalles del inmueble</div>
+      <div class="grid-2" id="m-detalles"></div>
+      <div class="divider-sm"></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="flex:1;">
+          <div class="detail-section-title">Notas</div>
+          <textarea id="m-notas" style="width:100%;min-height:80px;background:var(--dark4);border:1px solid var(--border-dim);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px;outline:none;" placeholder="Observaciones del proyecto..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" onclick="deleteProyecto()">Eliminar proyecto</button>
+      <button class="btn btn-outline" onclick="closeModal()">Cerrar</button>
+      <button class="btn btn-gold" onclick="saveNotas()">Guardar notas</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ESTADOS = ['evaluacion','comprado','remodelacion','en_venta','vendido'];
+const ESTADO_LABELS = { evaluacion:'Evaluación', comprado:'Comprado', remodelacion:'Remodelación', en_venta:'En venta', vendido:'Vendido', cancelado:'Cancelado' };
+
+let allProyectos = [], currentFilter = 'todos', currentId = null;
+
+async function init() {
+  const session = await requireAuth(); if (!session) return;
+  const user = session.user;
+  const nombre = user.user_metadata?.nombre || user.email.split('@')[0];
+  $('user-nm').textContent = nombre; $('user-av').textContent = nombre[0].toUpperCase();
+  await loadProyectos();
+  const urlId = new URLSearchParams(location.search).get('id');
+  if (urlId) { const p = allProyectos.find(x => x.id === urlId); if (p) openModal(p); }
+}
+
+async function loadProyectos() {
+  const { data, error } = await supabase.from('proyectos').select('*').order('created_at', { ascending: false });
+  if (error) return;
+  allProyectos = data;
+  renderGrid(data);
+}
+
+function setFilter(el, f) {
+  currentFilter = f;
+  $$('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterProyectos();
+}
+
+function filterProyectos() {
+  const q = $('search-inp').value.toLowerCase();
+  let list = allProyectos;
+  if (currentFilter !== 'todos') list = list.filter(p => p.estado === currentFilter);
+  if (q) list = list.filter(p => p.nombre.toLowerCase().includes(q) || (p.ciudad||'').toLowerCase().includes(q) || (p.direccion||'').toLowerCase().includes(q));
+  renderGrid(list);
+}
+
+function renderGrid(proyectos) {
+  $('count-label').textContent = proyectos.length + ' proyecto' + (proyectos.length !== 1 ? 's' : '');
+  const grid = $('proj-grid');
+  if (!proyectos.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1"><div class="empty-state"><div class="empty-state-icon">🏠</div><h3>Sin proyectos</h3><p>Usa la calculadora para evaluar y guardar tu primer proyecto</p><button class="btn btn-gold" style="margin-top:1rem" onclick="location.href='calculadora.html'">Nuevo proyecto</button></div></div>`;
+    return;
+  }
+  grid.innerHTML = proyectos.map(p => {
+    const stageIdx = ESTADOS.indexOf(p.estado);
+    const dots = ESTADOS.map((e, i) => `<div class="stage-dot" style="background:${i <= stageIdx ? 'var(--gold)' : 'var(--dark5)'}"></div>`).join('');
+    const mColor = (p.margen_neto||0) >= 25 ? 'pos' : (p.margen_neto||0) >= 15 ? 'gold' : 'neg';
+    const rColor = (p.roi||0) >= 20 ? 'pos' : (p.roi||0) >= 10 ? 'gold' : 'neg';
+    return `<div class="proj-card" data-e="${p.estado}" onclick="openModal(allProyectos.find(x=>x.id==='${p.id}'))">
+      <div class="proj-card-accent"></div>
+      <div class="proj-header">
+        <div><div class="proj-name">${p.nombre}</div><div class="proj-addr">${p.ciudad||''} ${p.metros_cuadrados ? '· '+p.metros_cuadrados+'m²' : ''}</div></div>
+        <span class="badge badge-${p.estado}">${ESTADO_LABELS[p.estado]||p.estado}</span>
+      </div>
+      <div class="proj-metrics">
+        <div class="pm"><div class="pm-lbl">Compra</div><div class="pm-val">${fmtCOPShort(p.precio_compra)}</div></div>
+        <div class="pm"><div class="pm-lbl">${p.estado === 'vendido' ? 'Venta real' : 'Venta obj.'}</div><div class="pm-val">${fmtCOPShort(p.precio_venta_real || p.precio_venta_objetivo)}</div></div>
+        <div class="pm"><div class="pm-lbl">Margen</div><div class="pm-val ${mColor}">${p.margen_neto ? fmtPct(p.margen_neto) : '—'}</div></div>
+        <div class="pm"><div class="pm-lbl">ROI</div><div class="pm-val ${rColor}">${p.roi ? fmtPct(p.roi) : '—'}</div></div>
+      </div>
+      <div class="proj-progress">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span class="text-xs text-muted">Progreso</span><span class="text-xs text-gold">${ESTADO_LABELS[p.estado]||p.estado}</span></div>
+        <div class="progress-stages">${dots}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openModal(p) {
+  if (!p) return;
+  currentId = p.id;
+  $('m-nombre').textContent = p.nombre;
+  $('m-addr').textContent = [p.direccion, p.ciudad, p.departamento].filter(Boolean).join(' · ');
+  $('m-badge').innerHTML = `<span class="badge badge-${p.estado}">${ESTADO_LABELS[p.estado]||p.estado}</span>`;
+  $('m-estado-sel').value = p.estado;
+  $('m-notas').value = p.notas || '';
+  $('m-precio-real').value = p.precio_venta_real ? Math.round(p.precio_venta_real).toLocaleString('es-CO') : '';
+
+  // Timeline
+  const stageIdx = ESTADOS.indexOf(p.estado);
+  $('m-timeline').innerHTML = ESTADOS.map((e, i) => {
+    const cls = i < stageIdx ? 'done' : i === stageIdx ? 'current' : '';
+    const icon = i < stageIdx ? '✓' : i + 1;
+    return `<div class="stage ${cls}"><div class="stage-dot2">${icon}</div><div class="stage-lbl">${ESTADO_LABELS[e]}</div></div>`;
+  }).join('');
+
+  // Financiero
+  $('m-financiero').innerHTML = [
+    ['Precio de compra', fmtCOP(p.precio_compra)],
+    ['Remodelación presupuestada', fmtCOP(p.costo_remodelacion_presupuestado)],
+    ['Remodelación real', fmtCOP(p.costo_remodelacion_real) || '—'],
+    ['Venta objetivo', fmtCOP(p.precio_venta_objetivo)],
+    ['Venta real', p.precio_venta_real ? fmtCOP(p.precio_venta_real) : '—'],
+    ['Utilidad neta', fmtCOP(p.utilidad_neta)],
+    ['Retención en fuente', fmtCOP(p.retencion_fuente)],
+    ['Impuesto ganancia', fmtCOP(p.impuesto_ganancia)],
+  ].map(([l,v]) => `<div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v || '—'}</span></div>`).join('');
+
+  // KPIs
+  const mc = (p.margen_neto||0) >= 25 ? 'var(--success)' : (p.margen_neto||0) >= 15 ? 'var(--warning)' : 'var(--danger)';
+  const rc = (p.roi||0) >= 20 ? 'var(--success)' : (p.roi||0) >= 10 ? 'var(--warning)' : 'var(--danger)';
+  $('m-kpis').innerHTML = [
+    ['Margen neto', p.margen_neto ? fmtPct(p.margen_neto) : '—', mc],
+    ['ROI total', p.roi ? fmtPct(p.roi) : '—', rc],
+    ['ROI anualizado', p.roi_anualizado ? fmtPct(p.roi_anualizado) : '—', rc],
+    ['Inversión total', fmtCOP(p.inversion_total), 'var(--text)'],
+    ['Duración', p.duracion_meses ? p.duracion_meses + ' meses' : '—', 'var(--text)'],
+    ['% Remodelación', p.pct_remodelacion ? fmtPct(p.pct_remodelacion) : '—', (p.pct_remodelacion||0) <= 20 ? 'var(--success)' : 'var(--danger)'],
+  ].map(([l,v,c]) => `<div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val" style="color:${c}">${v || '—'}</span></div>`).join('');
+
+  // Detalles
+  $('m-detalles').innerHTML = `
+    <div>${[['Tipo',p.tipo_inmueble],['Estrato',p.estrato],['Área',p.metros_cuadrados ? p.metros_cuadrados + ' m²' : '—'],['Ciudad',p.ciudad]].map(([l,v])=>`<div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v||'—'}</span></div>`).join('')}</div>
+    <div>${[['Fecha compra',fmtDate(p.fecha_compra)],['Fecha venta',fmtDate(p.fecha_venta)],['Contribuyente',p.tipo_contribuyente],['Creado',fmtDate(p.created_at?.split('T')[0])]].map(([l,v])=>`<div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v||'—'}</span></div>`).join('')}</div>
+  `;
+
+  $('modal-detail').classList.add('open');
+}
+
+function closeModal() {
+  $('modal-detail').classList.remove('open');
+  currentId = null;
+}
+
+async function updateEstado() {
+  if (!currentId) return;
+  const estado = $('m-estado-sel').value;
+  const precioReal = parseFloat(($('m-precio-real').value || '').replace(/\D/g,'')) || null;
+  
+  const updates = { estado };
+  if (precioReal) {
+    updates.precio_venta_real = precioReal;
+    if (estado === 'vendido') updates.fecha_venta = new Date().toISOString().split('T')[0];
+    // Recalcular KPIs si tenemos precio real
+    const p = allProyectos.find(x => x.id === currentId);
+    if (p && precioReal) {
+      const invTotal = p.inversion_total || p.precio_compra;
+      const utilReal = precioReal - invTotal - (p.gastos_notariales_venta||0) - (p.retencion_fuente||0) - (p.impuesto_ganancia||0);
+      updates.utilidad_neta = Math.round(utilReal);
+      updates.margen_neto = Math.round(utilReal / precioReal * 1000) / 10;
+      updates.roi = Math.round(utilReal / (invTotal||1) * 1000) / 10;
+    }
+  }
+  
+  const { error } = await supabase.from('proyectos').update(updates).eq('id', currentId);
+  if (error) { toast('Error: ' + error.message, 'error'); return; }
+  toast('Estado actualizado correctamente', 'success');
+  closeModal(); await loadProyectos();
+}
+
+async function saveNotas() {
+  if (!currentId) return;
+  const { error } = await supabase.from('proyectos').update({ notas: $('m-notas').value }).eq('id', currentId);
+  if (error) { toast('Error: ' + error.message, 'error'); return; }
+  toast('Notas guardadas', 'success');
+}
+
+async function deleteProyecto() {
+  if (!currentId) return;
+  if (!confirm('¿Eliminar este proyecto permanentemente? Esta acción no se puede deshacer.')) return;
+  const { error } = await supabase.from('proyectos').delete().eq('id', currentId);
+  if (error) { toast('Error: ' + error.message, 'error'); return; }
+  toast('Proyecto eliminado', 'info');
+  closeModal(); await loadProyectos();
+}
+
+$('modal-detail').addEventListener('click', e => { if (e.target === $('modal-detail')) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+init();
+</script>
+</body>
+</html>

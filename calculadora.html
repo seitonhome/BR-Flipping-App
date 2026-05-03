@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/png;base64,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" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&R Inversiones — Calculadora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="js/app.js"></script>
+<style>
+.step-nav {
+  display: flex; gap: 0; margin-bottom: 2rem;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.step-btn {
+  flex: 1; padding: 12px 8px;
+  border: none; background: var(--dark3);
+  color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; cursor: pointer;
+  transition: all 0.15s; text-align: center;
+  border-right: 1px solid var(--border-dim);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.step-btn:last-child { border-right: none; }
+.step-btn.active { background: var(--gold-pale); color: var(--gold); font-weight: 500; }
+.step-btn .step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--dark5); font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-btn.active .step-num { background: var(--gold); color: var(--dark); }
+.step-btn.done .step-num { background: var(--success); color: var(--dark); }
+.step-btn.done { color: var(--text-muted); }
+
+.result-row {
+  display: flex; align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-dim);
+  font-size: 13px;
+}
+.result-row:last-child { border-bottom: none; }
+.result-label { flex: 1; color: var(--text-muted); }
+.result-val { font-weight: 500; color: var(--text); }
+.result-row.subtotal .result-label { font-weight: 500; color: var(--text); font-size: 14px; }
+.result-row.subtotal .result-val { font-size: 16px; font-family: 'Syne', sans-serif; }
+.result-row.total-final { background: var(--gold-pale); padding: 12px; border-radius: var(--radius-sm); margin-top: 10px; border: 1px solid var(--border); }
+.result-row.total-final .result-label { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); }
+.result-row.total-final .result-val { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+
+.checklist { display: flex; flex-direction: column; gap: 8px; }
+.check-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  border: 1px solid;
+  font-size: 13px; line-height: 1.5;
+}
+.check-pass { background: var(--success-bg); border-color: rgba(76,175,124,0.2); color: #70C090; }
+.check-warn { background: var(--warning-bg); border-color: rgba(232,168,60,0.2); color: #E8B860; }
+.check-fail { background: var(--danger-bg); border-color: rgba(224,85,85,0.2); color: #F07070; }
+.check-icon { font-size: 16px; flex-shrink: 0; }
+.check-text strong { display: block; font-weight: 500; margin-bottom: 2px; }
+
+.gauge-wrap { text-align: center; padding: 1rem 0; }
+.gauge-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.gauge-value { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; }
+.gauge-bar { height: 8px; border-radius: 4px; background: var(--dark5); margin-top: 8px; overflow: hidden; }
+.gauge-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+.gauge-target { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">FC</div>
+      <div class="logo-text">Flip<span>Col</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Principal</div>
+      <button class="nav-item" onclick="location.href='dashboard.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="location.href='proyectos.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>
+        Proyectos
+      </button>
+      <button class="nav-item active" onclick="location.href='calculadora.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>
+        Calculadora
+      </button>
+      <div class="nav-label">Reportes</div>
+      <button class="nav-item" onclick="location.href='reportes.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Reportes & KPIs
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card" onclick="doLogout()">
+        <div class="user-avatar" id="user-av">?</div>
+        <div><div class="user-name" id="user-nm">Cargando...</div><div class="user-role">Cerrar sesión</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Calculadora de flipping</div>
+      <div class="topbar-actions">
+        <button class="btn btn-outline btn-sm" onclick="resetCalc()">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- STEP NAV -->
+      <div class="step-nav">
+        <button class="step-btn active" id="step1-btn" onclick="goStep(1)"><div class="step-num">1</div><span>Inmueble</span></button>
+        <button class="step-btn" id="step2-btn" onclick="goStep(2)"><div class="step-num">2</div><span>Remodelación</span></button>
+        <button class="step-btn" id="step3-btn" onclick="goStep(3)"><div class="step-num">3</div><span>Venta</span></button>
+        <button class="step-btn" id="step4-btn" onclick="goStep(4)"><div class="step-num">4</div><span>Análisis</span></button>
+        <button class="step-btn" id="step5-btn" onclick="goStep(5)"><div class="step-num">5</div><span>Guardar</span></button>
+      </div>
+
+      <!-- STEP 1: INMUEBLE -->
+      <div id="step1" class="tab-panel active">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Datos del inmueble</div></div>
+            <div class="form-grid cols-2">
+              <div class="field" style="grid-column:1/-1">
+                <label>Nombre del proyecto *</label>
+                <input type="text" id="f-nombre" placeholder="Ej: Apto Manga Piso 3">
+              </div>
+              <div class="field" style="grid-column:1/-1">
+                <label>Dirección</label>
+                <input type="text" id="f-dir" placeholder="Calle / Carrera / Barrio">
+              </div>
+              <div class="field">
+                <label>Ciudad</label>
+                <select id="f-ciudad">
+                  <option value="Cartagena">Cartagena</option>
+                  <option value="Bogotá">Bogotá</option>
+                  <option value="Medellín">Medellín</option>
+                  <option value="Cali">Cali</option>
+                  <option value="Barranquilla">Barranquilla</option>
+                  <option value="Bucaramanga">Bucaramanga</option>
+                  <option value="Pereira">Pereira</option>
+                  <option value="Santa Marta">Santa Marta</option>
+                  <option value="Otra">Otra</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Departamento</label>
+                <input type="text" id="f-depto" placeholder="Bolívar" value="Bolívar">
+              </div>
+              <div class="field">
+                <label>Tipo de inmueble</label>
+                <select id="f-tipo">
+                  <option value="apartamento">Apartamento</option>
+                  <option value="casa">Casa</option>
+                  <option value="local">Local comercial</option>
+                  <option value="lote">Lote / terreno</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Estrato</label>
+                <select id="f-estrato">
+                  <option value="1">1</option><option value="2">2</option>
+                  <option value="3" selected>3</option><option value="4">4</option>
+                  <option value="5">5</option><option value="6">6</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Área (m²)</label>
+                <input type="number" id="f-m2" placeholder="80" value="">
+              </div>
+              <div class="field">
+                <label>Duración estimada (meses)</label>
+                <input type="number" id="f-dur" value="6" min="1" max="60">
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">Precio y costos de adquisición</div></div>
+            <div class="form-grid cols-1">
+              <div class="field">
+                <label>Precio de compra (COP) *</label>
+                <input type="text" id="f-pc" placeholder="250.000.000" oninput="fmtInput(this); liveCalc()">
+              </div>
+              <div class="field">
+                <label>Años de tenencia del bien (antes de vender)</label>
+                <input type="number" id="f-anos" value="0" min="0" max="30" oninput="liveCalc()">
+                <span class="hint">0 = compra y venta en el mismo año (flipping típico → renta ordinaria 33%)</span>
+              </div>
+              <div class="field">
+                <label>Predial anual (COP)</label>
+                <input type="text" id="f-predial" value="500.000" placeholder="500.000" oninput="fmtInput(this); liveCalc()">
+              </div>
+              <div class="field">
+                <label>Administración mensual (COP)</label>
+                <input type="text" id="f-admin" value="0" placeholder="0" oninput="fmtInput(this); liveCalc()">
+              </div>
+              <div class="field">
+                <label>Financiación mensual (cuota crédito, COP)</label>
+                <input type="text" id="f-fin" value="0" placeholder="0" oninput="fmtInput(this); liveCalc()">
+              </div>
+              <div class="field">
+                <label>Tipo de contribuyente</label>
+                <select id="f-contrib">
+                  <option value="natural">Persona natural</option>
+                  <option value="juridica">Persona jurídica / SAS</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex" style="justify-content:flex-end;margin-top:1rem;">
+          <button class="btn btn-gold" onclick="goStep(2)">Siguiente: Remodelación →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: REMODELACIÓN -->
+      <div id="step2" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Costos de remodelación</div></div>
+            <div class="form-grid cols-1">
+              <div class="field">
+                <label>% remodelación sobre precio de compra</label>
+                <div class="slider-row">
+                  <input type="range" id="f-premo" min="1" max="40" value="15" step="0.5" oninput="updateSlider('f-premo','v-premo'); liveCalc()">
+                  <span class="slider-val" id="v-premo">15%</span>
+                </div>
+                <div id="hint-remo" class="hint" style="color:var(--success)">✓ Dentro del rango recomendado (15–20%)</div>
+              </div>
+              <div class="field">
+                <label>Costo adicional de obra (COP)</label>
+                <input type="text" id="f-extra" value="0" placeholder="0" oninput="fmtInput(this); liveCalc()">
+                <span class="hint">Permisos de construcción, diseño arquitectónico, imprevistos</span>
+              </div>
+              <div class="field">
+                <label>Calidad de acabados</label>
+                <select id="f-calidad">
+                  <option value="basica">Básica (económica)</option>
+                  <option value="media" selected>Media (estándar)</option>
+                  <option value="alta">Alta gama</option>
+                </select>
+              </div>
+              <div id="costo-remo-preview" style="background:var(--dark4);padding:14px;border-radius:var(--radius-sm);margin-top:4px;">
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Costo estimado de remodelación</div>
+                <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--gold);" id="v-costo-remo">$ 0</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Desglose de la obra</div></div>
+            <div id="desglose-obra">
+              <div class="text-muted text-sm" style="padding:2rem;text-align:center;">Ingresa el precio de compra para ver el desglose estimado</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-1" style="justify-content:space-between;margin-top:1rem;">
+          <button class="btn btn-outline" onclick="goStep(1)">← Atrás</button>
+          <button class="btn btn-gold" onclick="goStep(3)">Siguiente: Venta →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: VENTA -->
+      <div id="step3" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Precio y condiciones de venta</div></div>
+            <div class="form-grid cols-1">
+              <div class="field">
+                <label>Precio de venta objetivo (COP) *</label>
+                <input type="text" id="f-pv" placeholder="350.000.000" oninput="fmtInput(this); liveCalc()">
+              </div>
+              <div class="field">
+                <label>Comisión inmobiliaria al vender (%)</label>
+                <div class="slider-row">
+                  <input type="range" id="f-pcom" min="1" max="5" value="3" step="0.5" oninput="updateSlider('f-pcom','v-pcom'); liveCalc()">
+                  <span class="slider-val" id="v-pcom">3%</span>
+                </div>
+                <span class="hint">Estándar Colombia: 3% del vendedor · 3% del comprador</span>
+              </div>
+              <div class="field">
+                <label>Otros gastos de venta (COP)</label>
+                <input type="text" id="f-otros" value="0" placeholder="0" oninput="fmtInput(this); liveCalc()">
+                <span class="hint">Fotografía, staging, avisos, portales inmobiliarios</span>
+              </div>
+              <div class="field">
+                <label>¿Es vivienda habitual del vendedor?</label>
+                <select id="f-vhab" onchange="liveCalc()">
+                  <option value="no" selected>No — inversión / flipping</option>
+                  <option value="si">Sí — vivienda habitual</option>
+                </select>
+                <span class="hint">Vivienda habitual puede tener exenciones fiscales</span>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Resumen rápido</div></div>
+            <div id="quick-summary">
+              <div class="text-muted text-sm" style="text-align:center;padding:2rem;">Completa los datos para ver el resumen</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-1" style="justify-content:space-between;margin-top:1rem;">
+          <button class="btn btn-outline" onclick="goStep(2)">← Atrás</button>
+          <button class="btn btn-gold" onclick="goStep(4); fullCalc()">Calcular análisis completo →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: ANÁLISIS -->
+      <div id="step4" class="tab-panel">
+        <!-- VERDICT -->
+        <div id="verdict-box" class="mb-3"></div>
+
+        <div class="grid-2 mb-3">
+          <!-- Gauges -->
+          <div class="card">
+            <div class="card-title mb-2">Indicadores clave</div>
+            <div class="grid-3" id="gauges"></div>
+          </div>
+          <!-- Breakdown chart -->
+          <div class="card">
+            <div class="card-title mb-2">Estructura de costos vs. venta</div>
+            <div class="chart-container" style="height:200px;">
+              <canvas id="chart-breakdown" role="img" aria-label="Gráfica de estructura de costos del proyecto"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2 mb-3">
+          <!-- Costos compra -->
+          <div class="card">
+            <div class="card-title mb-2">Gastos de compra (notariales)</div>
+            <div id="tabla-gc"></div>
+          </div>
+          <!-- Costos venta -->
+          <div class="card">
+            <div class="card-title mb-2">Gastos de venta e impuestos</div>
+            <div id="tabla-gv"></div>
+          </div>
+        </div>
+
+        <!-- Checklist -->
+        <div class="card mb-3">
+          <div class="card-title mb-2">Checklist de viabilidad flipping</div>
+          <div class="checklist" id="checklist-full"></div>
+        </div>
+
+        <!-- Resumen financiero completo -->
+        <div class="card">
+          <div class="card-title mb-2">Resumen financiero completo</div>
+          <div id="resumen-full"></div>
+        </div>
+
+        <div class="flex gap-1" style="justify-content:space-between;margin-top:1.5rem;">
+          <button class="btn btn-outline" onclick="goStep(3)">← Atrás</button>
+          <button class="btn btn-gold btn-lg" onclick="goStep(5)">Guardar proyecto →</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: GUARDAR -->
+      <div id="step5" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Guardar como proyecto</div></div>
+            <div class="form-grid cols-1" style="gap:1rem;">
+              <div class="field">
+                <label>Estado actual del proyecto</label>
+                <select id="f-estado">
+                  <option value="evaluacion">Evaluación (solo análisis)</option>
+                  <option value="comprado">Comprado (en proceso)</option>
+                  <option value="remodelacion">En remodelación</option>
+                  <option value="en_venta">En venta</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Fecha de compra</label>
+                <input type="date" id="f-fcompra">
+              </div>
+              <div class="field">
+                <label>Notas del proyecto</label>
+                <textarea id="f-notas" placeholder="Observaciones, condiciones especiales, contactos..."></textarea>
+              </div>
+              <button class="btn btn-gold btn-lg" id="btn-guardar" onclick="guardarProyecto()">
+                Guardar proyecto
+              </button>
+              <div id="msg-guardar" class="msg"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Resumen del proyecto a guardar</div></div>
+            <div id="save-preview"></div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;">
+          <button class="btn btn-outline" onclick="goStep(4)">← Volver al análisis</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+let calcData = {};
+let chartBreakdown;
+
+async function init() {
+  const session = await requireAuth();
+  if (!session) return;
+  const user = session.user;
+  const nombre = user.user_metadata?.nombre || user.email.split('@')[0];
+  $('user-nm').textContent = nombre;
+  $('user-av').textContent = nombre[0].toUpperCase();
+  updateSlider('f-premo', 'v-premo');
+  updateSlider('f-pcom', 'v-pcom');
+}
+
+function updateSlider(inId, outId) {
+  $(outId).textContent = $(inId).value + '%';
+  const pct = parseFloat($(inId).value);
+  if (inId === 'f-premo') {
+    const hint = $('hint-remo');
+    if (pct <= 15) { hint.style.color = 'var(--success)'; hint.textContent = '✓ Excelente — por debajo del 15%'; }
+    else if (pct <= 20) { hint.style.color = 'var(--success)'; hint.textContent = '✓ Dentro del rango recomendado (15–20%)'; }
+    else if (pct <= 25) { hint.style.color = 'var(--warning)'; hint.textContent = '⚠ Por encima del 20% — margen en riesgo'; }
+    else { hint.style.color = 'var(--danger)'; hint.textContent = '✗ Supera el 25% — no recomendado'; }
+  }
+}
+
+function goStep(n) {
+  for (let i = 1; i <= 5; i++) {
+    const p = $(`step${i}`); if (p) p.classList.toggle('active', i === n);
+    const b = $(`step${i}-btn`);
+    if (b) { b.classList.remove('active','done'); if (i === n) b.classList.add('active'); else if (i < n) b.classList.add('done'); }
+  }
+  if (n === 4) fullCalc();
+  if (n === 5) renderSavePreview();
+}
+
+function liveCalc() {
+  const pc = parseInput('f-pc');
+  const pct = parseFloat($('f-premo')?.value || 15) / 100;
+  const extra = parseInput('f-extra');
+  const costoRemo = pc * pct + extra;
+  if ($('v-costo-remo')) $('v-costo-remo').textContent = fmtCOP(costoRemo);
+  if (pc > 0 && $('desglose-obra')) renderDesgloseObra(pc, pct, costoRemo);
+  const pv = parseInput('f-pv');
+  if (pc > 0 && pv > 0) renderQuickSummary(pc, pv, costoRemo);
+}
+
+function renderDesgloseObra(pc, pct, total) {
+  const calidad = $('f-calidad')?.value || 'media';
+  const m = { basica: [0.15,0.25,0.2,0.15,0.1,0.15], media: [0.2,0.25,0.2,0.1,0.1,0.15], alta: [0.25,0.2,0.2,0.1,0.1,0.15] };
+  const parts = ['Cocina y baños','Pisos y revestimientos','Pintura y acabados','Electricidad y plomería','Carpintería y puertas','Imprevistos (10-15%)'];
+  const mults = m[calidad];
+  $('desglose-obra').innerHTML = parts.map((p, i) => `
+    <div class="result-row"><span class="result-label">${p}</span><span class="result-val">${fmtCOP(total * mults[i])}</span></div>
+  `).join('') + `<div class="result-row subtotal"><span class="result-label">Total estimado</span><span class="result-val" style="color:var(--gold)">${fmtCOP(total)}</span></div>`;
+}
+
+function renderQuickSummary(pc, pv, remo) {
+  const plusvalia = ((pv - pc) / pc * 100).toFixed(1);
+  const color = plusvalia >= 30 ? 'var(--success)' : plusvalia >= 20 ? 'var(--warning)' : 'var(--danger)';
+  $('quick-summary').innerHTML = `
+    <div class="result-row"><span class="result-label">Precio de compra</span><span class="result-val">${fmtCOP(pc)}</span></div>
+    <div class="result-row"><span class="result-label">Remodelación estimada</span><span class="result-val">${fmtCOP(remo)}</span></div>
+    <div class="result-row"><span class="result-label">Precio de venta objetivo</span><span class="result-val">${fmtCOP(pv)}</span></div>
+    <div class="result-row" style="margin-top:10px;background:var(--dark4);padding:10px;border-radius:8px;">
+      <span class="result-label" style="font-weight:500">Plusvalía bruta</span>
+      <span class="result-val" style="color:${color};font-size:18px;font-family:'Syne',sans-serif">${plusvalia}%</span>
+    </div>
+    <div class="text-sm text-muted mt-1">Precalificación: Para cubrir todos los gastos del flipping se recomienda una plusvalía mínima del 30–35% sobre el precio de compra.</div>
+  `;
+}
+
+function fullCalc() {
+  const pc = parseInput('f-pc');
+  const pv = parseInput('f-pv');
+  if (!pc || !pv) { return; }
+
+  const pctR = parseFloat($('f-premo').value) / 100;
+  const extra = parseInput('f-extra');
+  const costoRemo = pc * pctR + extra;
+  const pctCom = parseFloat($('f-pcom').value);
+  const dur = parseFloat($('f-dur').value) || 6;
+  const predial = parseInput('f-predial');
+  const admin = parseInput('f-admin');
+  const fin = parseInput('f-fin');
+  const otros = parseInput('f-otros');
+  const anos = parseFloat($('f-anos').value) || 0;
+  const tipo = $('f-tipo').value;
+
+  const d = calcFiscal({ precioCompra: pc, precioVenta: pv, costoRemo, pctComision: pctCom, duracion: dur, predial, admin, financiacion: fin, otrosG: otros, anosPropiedad: anos, tipoInmueble: tipo });
+  d.pctRemo = pctR * 100;
+  calcData = { pc, pv, pctR, costoRemo, dur, ...d, tipo, anos, notas: '' };
+
+  // Verdict
+  const vb = viabilidad({ pctRemo: pctR * 100, margen: d.margen, roi: d.roi, utilNeta: d.utilNeta });
+  const vColors = { viable: 'success', marginal: 'warning', noviable: 'danger' };
+  const vIcons = { viable: '✓', marginal: '⚠', noviable: '✗' };
+  const vTitles = { viable: 'Proyecto viable', marginal: 'Proyecto marginal — revisar', noviable: 'Proyecto no viable' };
+  const vTexts = {
+    viable: `Cumple ${vb.pasados}/4 criterios de flipping. Con un margen neto de ${fmtPct(d.margen*100)} y ROI de ${fmtPct(d.roi*100)}, el proyecto presenta condiciones favorables.`,
+    marginal: `Cumple ${vb.pasados}/4 criterios. Ajusta precio de compra, costo de remodelación o precio de venta antes de proceder.`,
+    noviable: `Solo cumple ${vb.pasados}/4 criterios. Los números actuales no soportan un negocio rentable. Se requieren cambios estructurales.`
+  };
+  $('verdict-box').innerHTML = `<div class="verdict verdict-${vb.verdict}"><div class="verdict-icon">${vIcons[vb.verdict]}</div><div><div class="verdict-title">${vTitles[vb.verdict]}</div><div class="verdict-desc">${vTexts[vb.verdict]}</div></div></div>`;
+
+  // Gauges
+  const gaugeData = [
+    { label: 'Margen neto', val: d.margen * 100, meta: 25, unit: '%', color: d.margen * 100 >= 25 ? 'var(--success)' : d.margen * 100 >= 15 ? 'var(--warning)' : 'var(--danger)', max: 50 },
+    { label: 'ROI total', val: d.roi * 100, meta: 20, unit: '%', color: d.roi * 100 >= 20 ? 'var(--success)' : d.roi * 100 >= 10 ? 'var(--warning)' : 'var(--danger)', max: 40 },
+    { label: 'ROI anualizado', val: d.roiAnual * 100, meta: 24, unit: '%', color: d.roiAnual * 100 >= 24 ? 'var(--success)' : 'var(--warning)', max: 48 },
+  ];
+  $('gauges').innerHTML = gaugeData.map(g => `
+    <div class="gauge-wrap">
+      <div class="gauge-label">${g.label}</div>
+      <div class="gauge-value" style="color:${g.color}">${fmtPct(g.val)}</div>
+      <div class="gauge-bar"><div class="gauge-fill" style="width:${Math.min(100, Math.max(0, g.val / g.max * 100))}%;background:${g.color}"></div></div>
+      <div class="gauge-target">Meta: ${g.meta}%</div>
+    </div>
+  `).join('');
+
+  // Breakdown chart
+  const breakItems = [
+    { l: 'Compra', v: pc }, { l: 'Remo.', v: costoRemo },
+    { l: 'G.Compra', v: d.totGC }, { l: 'Tenencia', v: d.totalTenencia },
+    { l: 'G.Venta', v: d.totGV }, { l: 'Impuestos', v: d.retencion + d.impGONeto },
+    { l: 'Utilidad', v: d.utilNeta }
+  ];
+  const bColors = ['#5B9BD5','#C9A84C','#E8A83C','#888780','#D85A30','#E05555', d.utilNeta >= 0 ? '#4CAF7C' : '#E05555'];
+  if (chartBreakdown) chartBreakdown.destroy();
+  chartBreakdown = new Chart($('chart-breakdown'), {
+    type: 'bar',
+    data: {
+      labels: breakItems.map(b => b.l),
+      datasets: [{ data: breakItems.map(b => Math.round(b.v / 1e6)), backgroundColor: bColors, borderRadius: 5, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$ ' + ctx.raw + 'M' } } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8A8680', font: { size: 11 } } },
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8A8680', callback: v => '$' + v + 'M' } }
+      }
+    }
+  });
+
+  // Tabla gastos compra
+  $('tabla-gc').innerHTML = [
+    ['Derechos notariales (0.27%)', d.notarialC],
+    ['Impuesto de beneficencia y registro (1.67%)', d.beneficencia],
+    ['Gastos administrativos (biometría, copias)', d.adminC],
+  ].map(([l, v]) => `<div class="result-row"><span class="result-label">${l}</span><span class="result-val">${fmtCOP(v)}</span></div>`).join('')
+  + `<div class="result-row subtotal"><span class="result-label">Total gastos compra</span><span class="result-val text-gold">${fmtCOP(d.totGC)}</span></div>`;
+
+  // Tabla gastos venta
+  $('tabla-gv').innerHTML = [
+    ['Derechos notariales (0.27%)', d.notarialV],
+    [`Comisión inmobiliaria (${fmtPct(pctCom)})`, d.comision],
+    ['Gastos administrativos venta', d.adminV],
+    [`Retención en la fuente (${fmtPct(d.tasaRet * 100)})`, d.retencion],
+    [d.notaGO, d.impGONeto],
+  ].map(([l, v]) => `<div class="result-row"><span class="result-label">${l}</span><span class="result-val">${fmtCOP(v)}</span></div>`).join('')
+  + `<div class="result-row subtotal"><span class="result-label">Total egresos venta</span><span class="result-val text-gold">${fmtCOP(d.totGV + d.retencion + d.impGONeto)}</span></div>`;
+
+  // Checklist
+  const chks = [
+    { pass: pctR * 100 <= 20, warn: pctR * 100 <= 25, title: `Remodelación: ${fmtPct(pctR * 100)} del precio de compra`, pass_t: 'Dentro del límite recomendado (≤ 20%). Buen control de costos.', warn_t: 'Ligeramente por encima del 20%. Reduce alcance o negocia mejor precio de compra.', fail_t: 'Supera el 25%. La remodelación consume demasiado margen.' },
+    { pass: d.margen * 100 >= 25, warn: d.margen * 100 >= 15, title: `Margen neto: ${fmtPct(d.margen * 100)}`, pass_t: 'Supera el 25% mínimo recomendado para flipping.', warn_t: 'Entre 15-25%. Viable pero sin margen de error ante imprevistos.', fail_t: 'Bajo el 15%. Muy riesgoso. Ajusta precio compra o venta.' },
+    { pass: d.roi * 100 >= 20, warn: d.roi * 100 >= 10, title: `ROI sobre inversión: ${fmtPct(d.roi * 100)}`, pass_t: 'ROI superior al 20%. Retorno atractivo.', warn_t: 'ROI entre 10-20%. Considera el costo de oportunidad del capital.', fail_t: 'ROI inferior al 10%. Existen mejores alternativas de inversión.' },
+    { pass: d.utilNeta > 0, warn: false, title: `Utilidad neta: ${fmtCOPShort(d.utilNeta)}`, pass_t: 'El proyecto genera utilidad después de todos los impuestos y gastos.', warn_t: '', fail_t: 'El proyecto arroja pérdida neta. No proceder.' },
+  ];
+  $('checklist-full').innerHTML = chks.map(c => {
+    const cls = c.pass ? 'pass' : (c.warn ? 'warn' : 'fail');
+    const icon = c.pass ? '✓' : (c.warn ? '!' : '✗');
+    const txt = c.pass ? c.pass_t : (c.warn ? c.warn_t : c.fail_t);
+    return `<div class="check-item check-${cls}"><span class="check-icon">${icon}</span><div class="check-text"><strong>${c.title}</strong>${txt}</div></div>`;
+  }).join('');
+
+  // Resumen financiero
+  $('resumen-full').innerHTML = `
+    <div class="result-row"><span class="result-label">Precio de compra</span><span class="result-val">${fmtCOP(pc)}</span></div>
+    <div class="result-row"><span class="result-label">Costo remodelación</span><span class="result-val">${fmtCOP(costoRemo)}</span></div>
+    <div class="result-row"><span class="result-label">Gastos notariales compra</span><span class="result-val">${fmtCOP(d.totGC)}</span></div>
+    <div class="result-row"><span class="result-label">Costos de tenencia (${dur} meses)</span><span class="result-val">${fmtCOP(d.totalTenencia)}</span></div>
+    <div class="result-row subtotal"><span class="result-label">Total invertido</span><span class="result-val">${fmtCOP(d.totalInv)}</span></div>
+    <div class="divider-sm"></div>
+    <div class="result-row"><span class="result-label">Precio de venta</span><span class="result-val">${fmtCOP(pv)}</span></div>
+    <div class="result-row"><span class="result-label">(−) Gastos venta y comisión</span><span class="result-val text-danger">− ${fmtCOP(d.totGV)}</span></div>
+    <div class="result-row"><span class="result-label">(−) Retención en la fuente</span><span class="result-val text-danger">− ${fmtCOP(d.retencion)}</span></div>
+    <div class="result-row"><span class="result-label">(−) Impuesto sobre utilidad</span><span class="result-val text-danger">− ${fmtCOP(d.impGONeto)}</span></div>
+    <div class="result-row total-final"><span class="result-label">Utilidad neta final</span><span class="result-val" style="color:${d.utilNeta >= 0 ? 'var(--success)' : 'var(--danger)'}">${fmtCOP(d.utilNeta)}</span></div>
+  `;
+}
+
+function renderSavePreview() {
+  const d = calcData;
+  if (!d.pc) { $('save-preview').innerHTML = '<div class="text-muted text-sm" style="padding:2rem;text-align:center;">Completa el análisis primero</div>'; return; }
+  $('f-notas').value = d.notas || '';
+  $('save-preview').innerHTML = `
+    <div class="result-row"><span class="result-label">Proyecto</span><span class="result-val">${$('f-nombre').value || 'Sin nombre'}</span></div>
+    <div class="result-row"><span class="result-label">Ciudad</span><span class="result-val">${$('f-ciudad').value}</span></div>
+    <div class="result-row"><span class="result-label">Precio de compra</span><span class="result-val">${fmtCOP(d.pc)}</span></div>
+    <div class="result-row"><span class="result-label">Precio venta objetivo</span><span class="result-val">${fmtCOP(d.pv)}</span></div>
+    <div class="result-row"><span class="result-label">Remodelación estimada</span><span class="result-val">${fmtCOP(d.costoRemo)}</span></div>
+    <div class="result-row"><span class="result-label">Utilidad neta proyectada</span><span class="result-val" style="color:${(d.utilNeta||0) >= 0 ? 'var(--success)' : 'var(--danger)'}">${fmtCOP(d.utilNeta)}</span></div>
+    <div class="result-row"><span class="result-label">Margen neto</span><span class="result-val text-gold">${fmtPct((d.margen||0)*100)}</span></div>
+    <div class="result-row"><span class="result-label">ROI</span><span class="result-val text-gold">${fmtPct((d.roi||0)*100)}</span></div>
+  `;
+}
+
+async function guardarProyecto() {
+  const d = calcData;
+  if (!d.pc || !d.pv) { toast('Completa el análisis antes de guardar', 'error'); return; }
+  const nombre = $('f-nombre').value.trim();
+  if (!nombre) { toast('Agrega un nombre al proyecto', 'error'); goStep(1); return; }
+
+  const btn = $('btn-guardar');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const row = {
+    user_id: user.id,
+    nombre, 
+    direccion: $('f-dir').value,
+    ciudad: $('f-ciudad').value,
+    departamento: $('f-depto').value,
+    tipo_inmueble: $('f-tipo').value,
+    estrato: parseInt($('f-estrato').value),
+    metros_cuadrados: parseFloat($('f-m2').value) || null,
+    duracion_meses: parseFloat($('f-dur').value),
+    estado: $('f-estado').value,
+    fecha_compra: $('f-fcompra').value || null,
+    precio_compra: d.pc,
+    gastos_notariales_compra: Math.round(d.notarialC),
+    beneficencia_registro: Math.round(d.beneficencia),
+    pct_remodelacion: d.pctR * 100,
+    costo_remodelacion_presupuestado: Math.round(d.costoRemo),
+    predial: parseInput('f-predial'),
+    administracion_mensual: parseInput('f-admin'),
+    financiacion_mensual: parseInput('f-fin'),
+    precio_venta_objetivo: d.pv,
+    pct_comision: parseFloat($('f-pcom').value),
+    gastos_notariales_venta: Math.round(d.notarialV),
+    retencion_fuente: Math.round(d.retencion),
+    impuesto_ganancia: Math.round(d.impGONeto),
+    inversion_total: Math.round(d.totalInv),
+    utilidad_neta: Math.round(d.utilNeta),
+    margen_neto: Math.round(d.margen * 100 * 10) / 10,
+    roi: Math.round(d.roi * 100 * 10) / 10,
+    roi_anualizado: Math.round(d.roiAnual * 100 * 10) / 10,
+    notas: $('f-notas').value,
+    anos_tenencia: parseFloat($('f-anos').value),
+    tipo_contribuyente: $('f-contrib').value,
+  };
+
+  const { error } = await supabase.from('proyectos').insert(row);
+  if (error) {
+    toast('Error al guardar: ' + error.message, 'error');
+    btn.disabled = false; btn.textContent = 'Guardar proyecto';
+  } else {
+    toast('Proyecto guardado exitosamente', 'success');
+    setTimeout(() => { location.href = 'proyectos.html'; }, 1500);
+  }
+}
+
+function resetCalc() {
+  calcData = {};
+  goStep(1);
+  ['f-nombre','f-dir','f-pc','f-pv','f-extra','f-otros','f-notas'].forEach(id => { const el = $(id); if (el) el.value = ''; });
+  ['f-predial','f-admin','f-fin'].forEach(id => { const el = $(id); if (el) el.value = '0'; });
+  $('f-premo').value = 15; $('f-pcom').value = 3; $('f-dur').value = 6; $('f-anos').value = 0;
+  updateSlider('f-premo','v-premo'); updateSlider('f-pcom','v-pcom');
+  toast('Calculadora reiniciada', 'info');
+}
+
+init();
+</script>
+</body>
+</html>

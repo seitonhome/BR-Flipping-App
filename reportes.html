@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/png;base64,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" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&R Inversiones — Reportes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="js/app.js"></script>
+<style>
+.kpi-large {
+  background: var(--dark3);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  position: relative; overflow: hidden;
+}
+.kpi-large::before { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
+.kpi-large.gold::before { background:linear-gradient(90deg,var(--gold-dark),var(--gold)); }
+.kpi-large.green::before { background:var(--success); }
+.kpi-large.blue::before { background:var(--info); }
+.kpi-large.purple::before { background:#A585E8; }
+.kpi-label { font-size:12px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em; }
+.kpi-value { font-family:'Syne',sans-serif;font-size:34px;font-weight:800;line-height:1;margin-bottom:6px; }
+.kpi-large.gold .kpi-value { color:var(--gold); }
+.kpi-large.green .kpi-value { color:var(--success); }
+.kpi-large.blue .kpi-value { color:var(--info); }
+.kpi-large.purple .kpi-value { color:#A585E8; }
+.kpi-sub { font-size:13px;color:var(--text-dim); }
+
+.chart-card { background:var(--dark3);border:1px solid var(--border-dim);border-radius:var(--radius-lg);padding:1.5rem; }
+.chart-card-title { font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:4px; }
+.chart-card-sub { font-size:12px;color:var(--text-muted);margin-bottom:1.25rem; }
+
+.rank-item {
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border-dim);
+  font-size:13px;
+}
+.rank-item:last-child { border-bottom:none; }
+.rank-num { width:24px;height:24px;border-radius:50%;background:var(--dark5);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0; }
+.rank-1 .rank-num { background:var(--gold);color:var(--dark); }
+.rank-2 .rank-num { background:#A8A8A8;color:var(--dark); }
+.rank-3 .rank-num { background:#CD7F32;color:var(--dark); }
+.rank-name { flex:1;font-weight:500;color:var(--text); }
+.rank-val { font-weight:600;color:var(--success); }
+
+.table-rank { width:100%;border-collapse:collapse;font-size:13px; }
+.table-rank th { padding:8px 10px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);border-bottom:1px solid var(--border-dim);text-align:left; }
+.table-rank td { padding:10px;color:var(--text-muted);border-bottom:1px solid var(--border-dim); }
+.table-rank tr:last-child td { border-bottom:none; }
+.table-rank td.primary { color:var(--text);font-weight:500; }
+.table-rank tr:hover td { background:rgba(255,255,255,0.02); }
+
+.period-selector { display:flex;gap:4px; }
+.period-btn { padding:5px 12px;border-radius:20px;font-size:12px;border:1px solid var(--border-dim);background:var(--dark3);color:var(--text-muted);cursor:pointer;transition:all 0.15s; }
+.period-btn.active { background:var(--gold-pale);border-color:var(--gold);color:var(--gold); }
+.period-btn:hover:not(.active) { border-color:var(--border-mid);color:var(--text); }
+
+.insight-box {
+  background:var(--gold-pale);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px 16px;
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:13px;line-height:1.6;
+  margin-bottom:10px;
+}
+.insight-icon { font-size:18px;flex-shrink:0; }
+.insight-text { color:var(--text-muted); }
+.insight-text strong { color:var(--gold);display:block;font-weight:500;margin-bottom:2px; }
+</style>
+</head>
+<body>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="logo-mark">FC</div><div class="logo-text">Flip<span>Col</span></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Principal</div>
+      <button class="nav-item" onclick="location.href='dashboard.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+      <button class="nav-item" onclick="location.href='proyectos.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>Proyectos</button>
+      <button class="nav-item" onclick="location.href='calculadora.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>Calculadora</button>
+      <div class="nav-label">Reportes</div>
+      <button class="nav-item active" onclick="location.href='reportes.html'"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Reportes & KPIs</button>
+    </nav>
+    <div class="sidebar-footer"><div class="user-card" onclick="doLogout()"><div class="user-avatar" id="user-av">?</div><div><div class="user-name" id="user-nm">Cargando...</div><div class="user-role">Cerrar sesión</div></div></div></div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Reportes & KPIs</div>
+      <div class="topbar-actions">
+        <div class="period-selector">
+          <button class="period-btn" onclick="setPeriod(3,this)">3M</button>
+          <button class="period-btn" onclick="setPeriod(6,this)">6M</button>
+          <button class="period-btn active" onclick="setPeriod(12,this)">12M</button>
+          <button class="period-btn" onclick="setPeriod(0,this)">Todo</button>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="window.print()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Imprimir
+        </button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- TOP KPIs -->
+      <div class="grid-4 mb-3">
+        <div class="kpi-large gold"><div class="kpi-label">Ingresos totales por ventas</div><div class="kpi-value" id="r-ingresos">—</div><div class="kpi-sub" id="r-ingresos-sub">proyectos vendidos</div></div>
+        <div class="kpi-large green"><div class="kpi-label">Utilidad neta acumulada</div><div class="kpi-value" id="r-utilidad">—</div><div class="kpi-sub" id="r-util-sub">después de impuestos</div></div>
+        <div class="kpi-large blue"><div class="kpi-label">Margen neto promedio</div><div class="kpi-value" id="r-margen">—</div><div class="kpi-sub">meta: 25%</div></div>
+        <div class="kpi-large purple"><div class="kpi-label">ROI anualizado promedio</div><div class="kpi-value" id="r-roi">—</div><div class="kpi-sub">sobre capital invertido</div></div>
+      </div>
+
+      <!-- SEGUNDA FILA KPIs -->
+      <div class="grid-4 mb-3">
+        <div class="metric gold"><div class="metric-label">Total proyectos</div><div class="metric-value" id="r-total">0</div></div>
+        <div class="metric green"><div class="metric-label">Proyectos vendidos</div><div class="metric-value" id="r-vendidos">0</div></div>
+        <div class="metric blue"><div class="metric-label">En proceso</div><div class="metric-value" id="r-activos">0</div></div>
+        <div class="metric gold"><div class="metric-label">Mejor ROI</div><div class="metric-value" id="r-best-roi">—</div></div>
+      </div>
+
+      <!-- CHARTS ROW 1 -->
+      <div class="grid-2 mb-3">
+        <div class="chart-card">
+          <div class="chart-card-title">Evolución de utilidades</div>
+          <div class="chart-card-sub">Utilidad neta acumulada en el tiempo</div>
+          <div class="chart-container" style="height:230px"><canvas id="ch-utilidad-acum" role="img" aria-label="Evolución acumulada de utilidades"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title">Utilidad por proyecto</div>
+          <div class="chart-card-sub">Comparación proyectos vendidos</div>
+          <div class="chart-container" style="height:230px"><canvas id="ch-util-bar" role="img" aria-label="Utilidad de cada proyecto vendido"></canvas></div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW 2 -->
+      <div class="grid-2 mb-3">
+        <div class="chart-card">
+          <div class="chart-card-title">Margen neto por proyecto</div>
+          <div class="chart-card-sub">Línea de meta en 25%</div>
+          <div class="chart-container" style="height:230px"><canvas id="ch-margen" role="img" aria-label="Margen neto de cada proyecto"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title">Distribución de costos</div>
+          <div class="chart-card-sub">Estructura promedio de egresos</div>
+          <div style="display:flex;align-items:center;gap:1.5rem;">
+            <div class="chart-container" style="height:200px;width:200px;flex-shrink:0"><canvas id="ch-costos-pie" role="img" aria-label="Distribución de costos"></canvas></div>
+            <div id="costos-legend" style="flex:1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 3 -->
+      <div class="grid-2 mb-3">
+        <div class="chart-card">
+          <div class="chart-card-title">Precio compra vs. venta</div>
+          <div class="chart-card-sub">Comparación por proyecto</div>
+          <div class="chart-container" style="height:230px"><canvas id="ch-compra-venta" role="img" aria-label="Precio de compra vs precio de venta por proyecto"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title">ROI por proyecto</div>
+          <div class="chart-card-sub">Meta: 20% mínimo</div>
+          <div class="chart-container" style="height:230px"><canvas id="ch-roi" role="img" aria-label="ROI de cada proyecto"></canvas></div>
+        </div>
+      </div>
+
+      <!-- TABLA RANKING + INSIGHTS -->
+      <div class="grid-2 mb-3">
+        <div class="chart-card">
+          <div class="chart-card-title" style="margin-bottom:1rem">Ranking de proyectos</div>
+          <div class="table-wrap">
+            <table class="table-rank" id="tabla-ranking">
+              <thead><tr><th>#</th><th>Proyecto</th><th>Ciudad</th><th>Utilidad</th><th>Margen</th><th>ROI</th></tr></thead>
+              <tbody id="ranking-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title" style="margin-bottom:1rem">Insights automáticos</div>
+          <div id="insights-box"></div>
+        </div>
+      </div>
+
+      <!-- DURACIÓN Y TIMING -->
+      <div class="chart-card mb-3">
+        <div class="chart-card-title">Análisis de timing — duración por estado</div>
+        <div class="chart-card-sub">Cuántos meses duró cada proyecto en cada etapa (promedio)</div>
+        <div class="chart-container" style="height:200px"><canvas id="ch-timing" role="img" aria-label="Duración promedio por etapa del proyecto"></canvas></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+let allP = [], currentPeriod = 12;
+let charts = {};
+
+Chart.defaults.color = '#8A8680';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+
+const CC = { gold:'#C9A84C', green:'#4CAF7C', red:'#E05555', blue:'#5B9BD5', purple:'#A585E8', orange:'#E8A83C', gray:'#5A5754' };
+
+async function init() {
+  const session = await requireAuth(); if (!session) return;
+  const user = session.user;
+  const nombre = user.user_metadata?.nombre || user.email.split('@')[0];
+  $('user-nm').textContent = nombre; $('user-av').textContent = nombre[0].toUpperCase();
+  await loadData();
+}
+
+async function loadData() {
+  const { data } = await supabase.from('proyectos').select('*').order('fecha_venta', { ascending: true });
+  allP = data || [];
+  renderAll();
+}
+
+function setPeriod(m, el) {
+  currentPeriod = m;
+  $$('.period-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderAll();
+}
+
+function getFiltered() {
+  if (!currentPeriod) return allP;
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - currentPeriod);
+  return allP.filter(p => !p.fecha_venta || new Date(p.fecha_venta) >= cutoff);
+}
+
+function renderAll() {
+  const filtered = getFiltered();
+  const vendidos = filtered.filter(p => p.estado === 'vendido');
+  const activos = filtered.filter(p => !['vendido','cancelado'].includes(p.estado));
+
+  // KPIs top
+  const ingTot = vendidos.reduce((s,p) => s + (p.precio_venta_real || p.precio_venta_objetivo || 0), 0);
+  const utilTot = vendidos.reduce((s,p) => s + (p.utilidad_neta || 0), 0);
+  const margenProm = vendidos.length ? vendidos.reduce((s,p) => s + (p.margen_neto||0), 0) / vendidos.length : 0;
+  const roiProm = vendidos.length ? vendidos.reduce((s,p) => s + (p.roi_anualizado||0), 0) / vendidos.length : 0;
+  const bestRoi = vendidos.length ? Math.max(...vendidos.map(p => p.roi||0)) : 0;
+
+  $('r-ingresos').textContent = fmtCOPShort(ingTot);
+  $('r-ingresos-sub').textContent = vendidos.length + ' proyecto' + (vendidos.length !== 1 ? 's' : '') + ' vendido' + (vendidos.length !== 1 ? 's' : '');
+  $('r-utilidad').textContent = fmtCOPShort(utilTot);
+  $('r-util-sub').textContent = utilTot >= 0 ? 'rentabilidad positiva' : 'pérdida neta';
+  $('r-margen').textContent = fmtPct(margenProm);
+  $('r-roi').textContent = fmtPct(roiProm);
+  $('r-total').textContent = filtered.length;
+  $('r-vendidos').textContent = vendidos.length;
+  $('r-activos').textContent = activos.length;
+  $('r-best-roi').textContent = fmtPct(bestRoi);
+
+  renderCharts(filtered, vendidos);
+  renderRanking(vendidos);
+  renderInsights(filtered, vendidos, activos);
+}
+
+function destroyChart(key) { if (charts[key]) { charts[key].destroy(); delete charts[key]; } }
+
+function renderCharts(filtered, vendidos) {
+  const labels = vendidos.map(p => p.nombre.length > 12 ? p.nombre.substring(0,12)+'…' : p.nombre);
+
+  // Utilidad acumulada
+  let acum = 0;
+  const acumData = vendidos.map(p => { acum += (p.utilidad_neta||0); return Math.round(acum/1e6); });
+  const acumLabels = vendidos.map(p => fmtDate(p.fecha_venta).substring(0,7));
+  destroyChart('uc'); charts['uc'] = new Chart($('ch-utilidad-acum'), {
+    type: 'line', data: { labels: acumLabels.length ? acumLabels : ['—'], datasets: [{ label:'Utilidad acum.(M)', data: acumData.length ? acumData : [0], borderColor: CC.gold, backgroundColor:'rgba(201,168,76,0.08)', fill:true, tension:0.4, pointBackgroundColor:CC.gold, pointRadius:5 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'$ '+ctx.raw+'M'}}}, scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>'$'+v+'M'}} } }
+  });
+
+  // Utilidad por proyecto bar
+  const utilData = vendidos.map(p => Math.round((p.utilidad_neta||0)/1e6));
+  destroyChart('ub'); charts['ub'] = new Chart($('ch-util-bar'), {
+    type:'bar', data:{ labels:labels.length?labels:['—'], datasets:[{ label:'Utilidad M COP', data:utilData.length?utilData:[0], backgroundColor:utilData.map(v=>v>=0?CC.green:CC.red), borderRadius:6, borderSkipped:false }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'$ '+ctx.raw+'M'}}}, scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{maxRotation:30}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>'$'+v+'M'}} } }
+  });
+
+  // Margen
+  const margenData = vendidos.map(p => Math.round((p.margen_neto||0)*10)/10);
+  destroyChart('mg'); charts['mg'] = new Chart($('ch-margen'), {
+    type:'bar', data:{ labels:labels.length?labels:['—'], datasets:[
+      { label:'Margen %', data:margenData.length?margenData:[0], backgroundColor:margenData.map(v=>v>=25?CC.green:v>=15?CC.orange:CC.red), borderRadius:6, borderSkipped:false },
+      { label:'Meta 25%', data:Array(Math.max(labels.length,1)).fill(25), type:'line', borderColor:CC.gold, borderDash:[4,4], borderWidth:1.5, pointRadius:0, fill:false }
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{maxRotation:30}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>v+'%'}} } }
+  });
+
+  // Distribución costos (promedio)
+  const avgPC = vendidos.length ? vendidos.reduce((s,p)=>s+(p.precio_compra||0),0)/vendidos.length : 0;
+  const avgRemo = vendidos.length ? vendidos.reduce((s,p)=>s+(p.costo_remodelacion_presupuestado||0),0)/vendidos.length : 0;
+  const avgGC = vendidos.length ? vendidos.reduce((s,p)=>s+(p.gastos_notariales_compra||0)+(p.beneficencia_registro||0),0)/vendidos.length : 0;
+  const avgGV = vendidos.length ? vendidos.reduce((s,p)=>s+(p.gastos_notariales_venta||0),0)/vendidos.length : 0;
+  const avgRet = vendidos.length ? vendidos.reduce((s,p)=>s+(p.retencion_fuente||0)+(p.impuesto_ganancia||0),0)/vendidos.length : 0;
+  const avgUtil = vendidos.length ? vendidos.reduce((s,p)=>s+(p.utilidad_neta||0),0)/vendidos.length : 0;
+  const costoItems = [
+    { l:'Compra', v:avgPC, c:CC.blue },
+    { l:'Remodelación', v:avgRemo, c:CC.gold },
+    { l:'Gastos notariales', v:avgGC+avgGV, c:CC.orange },
+    { l:'Impuestos', v:avgRet, c:CC.red },
+    { l:'Utilidad neta', v:Math.max(0,avgUtil), c:CC.green },
+  ];
+  destroyChart('pie'); charts['pie'] = new Chart($('ch-costos-pie'), {
+    type:'doughnut', data:{ labels:costoItems.map(c=>c.l), datasets:[{ data:costoItems.map(c=>Math.round(c.v/1e6)), backgroundColor:costoItems.map(c=>c.c), borderWidth:2, borderColor:'#111' }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'60%', plugins:{legend:{display:false}} }
+  });
+  const total = costoItems.reduce((s,c)=>s+c.v,0);
+  $('costos-legend').innerHTML = costoItems.map(c=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;"><div style="width:10px;height:10px;border-radius:2px;background:${c.c};flex-shrink:0;"></div><span style="flex:1;color:var(--text-muted)">${c.l}</span><span style="font-weight:500;color:var(--text)">${total>0?Math.round(c.v/total*100):0}%</span></div>`).join('');
+
+  // Compra vs Venta
+  destroyChart('cv'); charts['cv'] = new Chart($('ch-compra-venta'), {
+    type:'bar', data:{ labels:labels.length?labels:['—'], datasets:[
+      { label:'Precio compra', data:vendidos.map(p=>Math.round((p.precio_compra||0)/1e6)), backgroundColor:'rgba(91,155,213,0.7)', borderRadius:4 },
+      { label:'Precio venta', data:vendidos.map(p=>Math.round(((p.precio_venta_real||p.precio_venta_objetivo)||0)/1e6)), backgroundColor:'rgba(201,168,76,0.7)', borderRadius:4 }
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{maxRotation:30}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>'$'+v+'M'}} } }
+  });
+
+  // ROI
+  const roiData = vendidos.map(p=>Math.round((p.roi||0)*10)/10);
+  destroyChart('roi'); charts['roi'] = new Chart($('ch-roi'), {
+    type:'bar', data:{ labels:labels.length?labels:['—'], datasets:[
+      { label:'ROI %', data:roiData.length?roiData:[0], backgroundColor:roiData.map(v=>v>=20?CC.green:v>=10?CC.orange:CC.red), borderRadius:6, borderSkipped:false },
+      { label:'Meta 20%', data:Array(Math.max(labels.length,1)).fill(20), type:'line', borderColor:CC.blue, borderDash:[4,4], borderWidth:1.5, pointRadius:0, fill:false }
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{maxRotation:30}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>v+'%'}} } }
+  });
+
+  // Timing
+  const durProm = {};
+  filtered.forEach(p => { if (p.estado && p.duracion_meses) { if (!durProm[p.estado]) durProm[p.estado] = []; durProm[p.estado].push(p.duracion_meses); } });
+  const timingLabels = ['Evaluación','Compra','Remodelación','Venta','Total'];
+  const timingData = [
+    durProm.evaluacion?.reduce((s,v)=>s+v,0) / (durProm.evaluacion?.length||1) || 1,
+    durProm.comprado?.reduce((s,v)=>s+v,0) / (durProm.comprado?.length||1) || 1,
+    durProm.remodelacion?.reduce((s,v)=>s+v,0) / (durProm.remodelacion?.length||1) || 2,
+    durProm.en_venta?.reduce((s,v)=>s+v,0) / (durProm.en_venta?.length||1) || 2,
+    filtered.filter(p=>p.estado==='vendido').reduce((s,p)=>s+(p.duracion_meses||0),0) / (vendidos.length||1) || 6,
+  ].map(v => Math.round(v*10)/10);
+  destroyChart('tm'); charts['tm'] = new Chart($('ch-timing'), {
+    type:'bar', data:{ labels:timingLabels, datasets:[{ label:'Meses promedio', data:timingData, backgroundColor:[CC.blue,CC.gold,CC.orange,CC.purple,CC.green], borderRadius:6, borderSkipped:false }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.raw+' meses'}}}, scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>v+' m'}} } }
+  });
+}
+
+function renderRanking(vendidos) {
+  const sorted = [...vendidos].sort((a,b) => (b.utilidad_neta||0)-(a.utilidad_neta||0));
+  $('ranking-body').innerHTML = sorted.length ? sorted.map((p,i) => `
+    <tr class="rank-${i+1 <= 3 ? i+1 : ''}" onclick="location.href='proyectos.html?id=${p.id}'" style="cursor:pointer;">
+      <td><div class="rank-num">${i+1}</div></td>
+      <td class="primary">${p.nombre}</td>
+      <td>${p.ciudad||'—'}</td>
+      <td style="color:${(p.utilidad_neta||0)>=0?'var(--success)':'var(--danger)'};font-weight:600">${fmtCOPShort(p.utilidad_neta)}</td>
+      <td style="color:${(p.margen_neto||0)>=25?'var(--success)':(p.margen_neto||0)>=15?'var(--warning)':'var(--danger)'}">${fmtPct(p.margen_neto||0)}</td>
+      <td style="color:${(p.roi||0)>=20?'var(--success)':(p.roi||0)>=10?'var(--warning)':'var(--danger)'}">${fmtPct(p.roi||0)}</td>
+    </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;">Sin proyectos vendidos aún</td></tr>';
+}
+
+function renderInsights(filtered, vendidos, activos) {
+  const insights = [];
+  if (!vendidos.length) {
+    insights.push({ icon:'🚀', title:'Primer proyecto', text:'Aún no tienes proyectos cerrados. Registra tu primera venta para ver insights de rentabilidad.' });
+  } else {
+    const margenProm = vendidos.reduce((s,p)=>s+(p.margen_neto||0),0)/vendidos.length;
+    if (margenProm >= 25) insights.push({ icon:'🏆', title:'Margen excelente', text:`Tu margen promedio (${fmtPct(margenProm)}) supera la meta del 25%. Estás generando valor sólido en cada proyecto.` });
+    else insights.push({ icon:'⚠️', title:'Mejorar margen', text:`Tu margen promedio (${fmtPct(margenProm)}) está por debajo del 25%. Revisa costos de remodelación o negocia mejor los precios de compra.` });
+    
+    const bestP = vendidos.reduce((a,b) => (b.roi||0)>(a.roi||0)?b:a, vendidos[0]);
+    if (bestP) insights.push({ icon:'⭐', title:'Mejor proyecto', text:`"${bestP.nombre}" fue tu proyecto más rentable con un ROI del ${fmtPct(bestP.roi||0)} y una utilidad de ${fmtCOPShort(bestP.utilidad_neta)}.` });
+    
+    const avgDur = vendidos.reduce((s,p)=>s+(p.duracion_meses||0),0)/vendidos.length;
+    insights.push({ icon:'⏱', title:'Duración promedio', text:`Tus proyectos toman en promedio ${Math.round(avgDur*10)/10} meses. ${avgDur <= 6 ? 'Excelente velocidad de rotación.' : 'Considera estrategias para reducir el tiempo en venta.'}` });
+
+    const remoAlta = vendidos.filter(p=>(p.pct_remodelacion||0)>20);
+    if (remoAlta.length) insights.push({ icon:'🔧', title:'Control de remodelación', text:`${remoAlta.length} proyecto(s) superaron el 20% en remodelación. Establece límites de presupuesto más estrictos desde la fase de compra.` });
+  }
+  if (activos.length) insights.push({ icon:'📊', title:'Proyectos activos', text:`Tienes ${activos.length} proyecto(s) en proceso con capital potencialmente comprometido. Monitorea el avance de remodelación y tiempos de venta.` });
+
+  $('insights-box').innerHTML = insights.map(i => `<div class="insight-box"><span class="insight-icon">${i.icon}</span><div class="insight-text"><strong>${i.title}</strong>${i.text}</div></div>`).join('');
+}
+
+init();
+</script>
+</body>
+</html>
