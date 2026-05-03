@@ -3,8 +3,8 @@
 // ============================================================
 
 // Supabase config — REPLACE with your actual values
-const SUPABASE_URL = 'https://TU_PROJECT_ID.supabase.co';
-const SUPABASE_ANON_KEY = 'TU_ANON_KEY_AQUI';
+const SUPABASE_URL = 'https://woagfgjsbmxeizglomfh.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
