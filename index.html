@@ -178,72 +178,85 @@ body {
     <div class="logo-tagline">B&R Inversiones S.A.S · Plataforma de flipping inmobiliario · Colombia</div>
   </div>
 
-  <div class="card">
-    <div class="tabs-auth">
-      <button class="tab-auth active" onclick="switchAuth('login')">Iniciar sesión</button>
-      <button class="tab-auth" onclick="switchAuth('register')">Registrarse</button>
+  <!-- LOGIN -->
+  <div class="card" id="card-login">
+    <div class="card-sub">Accede a tu panel de proyectos</div>
+    <div class="field">
+      <label>Correo electronico</label>
+      <input type="email" id="login-email" placeholder="tu@brinversiones.co" autocomplete="email">
     </div>
-
-    <div id="form-login">
-      <div class="card-sub">Accede a tu panel de proyectos</div>
-      <div class="field">
-        <label>Correo electrónico</label>
-        <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email">
-      </div>
-      <div class="field">
-        <label>Contraseña</label>
-        <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
-      </div>
-      <button class="btn-primary" id="btn-login" onclick="doLogin()">Entrar al panel</button>
-      <div class="msg" id="msg-login"></div>
+    <div class="field">
+      <label>Contrasena</label>
+      <input type="password" id="login-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password">
     </div>
-
-    <div id="form-register" style="display:none">
-      <div class="card-sub">Crea tu cuenta de equipo</div>
-      <div class="field">
-        <label>Nombre completo</label>
-        <input type="text" id="reg-nombre" placeholder="Juan Pérez">
-      </div>
-      <div class="field">
-        <label>Correo electrónico</label>
-        <input type="email" id="reg-email" placeholder="tu@email.com">
-      </div>
-      <div class="field">
-        <label>Contraseña</label>
-        <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
-      </div>
-      <button class="btn-primary" id="btn-reg" onclick="doRegister()">Crear cuenta</button>
-      <div class="msg" id="msg-reg"></div>
+    <button class="btn-primary" id="btn-login" onclick="doLogin()">Entrar al panel</button>
+    <div class="msg" id="msg-login"></div>
+    <div style="text-align:center;margin-top:1rem;font-size:12px;color:var(--text-dim);">
+      Sin acceso? Contacta a gerencia@brinversiones.co
     </div>
   </div>
 
-  <div class="footer-note">B&R Inversiones S.A.S · Colombia 2026 · Tarifas notariales actualizadas</div>
+  <!-- ADMIN PANEL visible solo para gerencia@brinversiones.co -->
+  <div class="card" id="card-admin" style="display:none;margin-top:1rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <div style="font-size:15px;font-weight:600;font-family:'Syne',sans-serif;">Panel de administracion</div>
+      <span style="font-size:11px;background:rgba(201,168,76,0.15);color:var(--gold);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);">Admin</span>
+    </div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Crear nuevo usuario del equipo</div>
+    <div class="field">
+      <label>Nombre completo</label>
+      <input type="text" id="new-nombre" placeholder="Juan Perez">
+    </div>
+    <div class="field">
+      <label>Correo electronico</label>
+      <input type="email" id="new-email" placeholder="usuario@brinversiones.co">
+    </div>
+    <div class="field">
+      <label>Contrasena temporal</label>
+      <input type="password" id="new-pass" placeholder="Minimo 6 caracteres">
+    </div>
+    <button class="btn-primary" id="btn-crear" onclick="crearUsuario()">Crear usuario</button>
+    <div class="msg" id="msg-admin"></div>
+    <div style="margin-top:1.5rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:1rem;">
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:0.75rem;">Usuarios del equipo</div>
+      <div id="lista-usuarios" style="font-size:13px;color:var(--text-dim);">Cargando...</div>
+    </div>
+    <div style="margin-top:1rem;text-align:right;">
+      <button onclick="doLogoutAdmin()" style="font-size:12px;color:var(--text-dim);background:none;border:none;cursor:pointer;">Cerrar sesion</button>
+    </div>
+  </div>
+
+  <div class="footer-note">B&R Inversiones S.A.S &middot; Colombia 2026 &middot; Tarifas notariales actualizadas</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const ADMIN_EMAIL = 'gerencia@brinversiones.co';
 const SUPABASE_URL = window.SUPABASE_URL || 'https://woagfgjsbmxeizglomfh.supabase.co';
 const SUPABASE_KEY = window.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function checkSession() {
   const { data } = await supabase.auth.getSession();
-  if (data.session) window.location.href = 'dashboard.html';
+  if (!data.session) return;
+  if (data.session.user.email === ADMIN_EMAIL) {
+    showAdminPanel();
+  } else {
+    window.location.href = 'dashboard.html';
+  }
 }
 checkSession();
 
-function switchAuth(tab) {
-  document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
-  document.querySelectorAll('.tab-auth').forEach((t, i) => {
-    t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
-  });
+function showAdminPanel() {
+  document.getElementById('card-login').style.display = 'none';
+  document.getElementById('card-admin').style.display = 'block';
+  cargarUsuarios();
 }
 
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
   el.textContent = text;
-  el.className = `msg ${type} show`;
+  el.className = 'msg ' + type + ' show';
 }
 
 async function doLogin() {
@@ -252,38 +265,66 @@ async function doLogin() {
   if (!email || !pass) return showMsg('msg-login', 'Completa todos los campos', 'error');
   const btn = document.getElementById('btn-login');
   btn.disabled = true; btn.textContent = 'Ingresando...';
-  const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
   if (error) {
-    showMsg('msg-login', 'Credenciales incorrectas. Verifica tu correo y contraseña.', 'error');
+    showMsg('msg-login', 'Credenciales incorrectas. Verifica con tu administrador.', 'error');
     btn.disabled = false; btn.textContent = 'Entrar al panel';
+    return;
+  }
+  if (data.user.email === ADMIN_EMAIL) {
+    btn.disabled = false; btn.textContent = 'Entrar al panel';
+    showAdminPanel();
   } else {
     window.location.href = 'dashboard.html';
   }
 }
 
-async function doRegister() {
-  const nombre = document.getElementById('reg-nombre').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const pass = document.getElementById('reg-pass').value;
-  if (!nombre || !email || !pass) return showMsg('msg-reg', 'Completa todos los campos', 'error');
-  if (pass.length < 6) return showMsg('msg-reg', 'La contraseña debe tener al menos 6 caracteres', 'error');
-  const btn = document.getElementById('btn-reg');
-  btn.disabled = true; btn.textContent = 'Creando cuenta...';
-  const { data, error } = await supabase.auth.signUp({ email, password: pass, options: { data: { nombre } } });
+async function crearUsuario() {
+  const nombre = document.getElementById('new-nombre').value.trim();
+  const email = document.getElementById('new-email').value.trim();
+  const pass = document.getElementById('new-pass').value;
+  if (!nombre || !email || !pass) return showMsg('msg-admin', 'Completa todos los campos', 'error');
+  if (pass.length < 6) return showMsg('msg-admin', 'La contrasena debe tener al menos 6 caracteres', 'error');
+  const btn = document.getElementById('btn-crear');
+  btn.disabled = true; btn.textContent = 'Creando...';
+  const { error } = await supabase.auth.signUp({
+    email, password: pass,
+    options: { data: { nombre } }
+  });
   if (error) {
-    showMsg('msg-reg', error.message, 'error');
-    btn.disabled = false; btn.textContent = 'Crear cuenta';
+    showMsg('msg-admin', 'Error: ' + error.message, 'error');
   } else {
-    showMsg('msg-reg', 'Cuenta creada. Revisa tu email para confirmar.', 'success');
-    btn.textContent = 'Revisa tu email';
+    showMsg('msg-admin', 'Usuario ' + nombre + ' (' + email + ') creado exitosamente.', 'success');
+    document.getElementById('new-nombre').value = '';
+    document.getElementById('new-email').value = '';
+    document.getElementById('new-pass').value = '';
+    cargarUsuarios();
   }
+  btn.disabled = false; btn.textContent = 'Crear usuario';
+}
+
+async function cargarUsuarios() {
+  const lista = document.getElementById('lista-usuarios');
+  const { data, error } = await supabase.from('perfiles').select('*').order('created_at', { ascending: false });
+  if (error || !data || !data.length) {
+    lista.innerHTML = '<div style="color:var(--text-dim);font-style:italic;padding:8px 0;">Sin usuarios registrados aun.</div>';
+    return;
+  }
+  lista.innerHTML = data.map(u =>
+    '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
+    '<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#8B6914,#C9A84C);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#0D0D0D;flex-shrink:0;">' +
+    (u.nombre || 'U')[0].toUpperCase() + '</div>' +
+    '<div style="flex:1;"><div style="color:var(--text);font-weight:500;">' + (u.nombre || 'Sin nombre') + '</div>' +
+    '<div style="font-size:11px;color:var(--text-dim);">' + (u.rol || 'agente') + '</div></div></div>'
+  ).join('');
+}
+
+function doLogoutAdmin() {
+  supabase.auth.signOut().then(() => location.reload());
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    if (document.getElementById('form-login').style.display !== 'none') doLogin();
-    else doRegister();
-  }
+  if (e.key === 'Enter') doLogin();
 });
 </script>
 </body>
