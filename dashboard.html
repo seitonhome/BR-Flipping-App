@@ -274,7 +274,7 @@ async function initPage() {
 }
 
 async function loadDashboard() {
-  const { data: proyectos, error } = await supabase
+  const { data: proyectos, error } = await _sbClient
     .from('proyectos')
     .select('*')
     .order('created_at', { ascending: false });
