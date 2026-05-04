@@ -5,30 +5,39 @@
 const SUPABASE_URL = 'https://woagfgjsbmxeizglomfh.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 
-// Supabase - lazy init via Proxy, works regardless of script load order
-var _sb = null;
-function getSupabase() {
-  if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  return _sb;
+// Lazy init - only creates client when first needed (CDN guaranteed loaded by then)
+var _sbClient = null;
+function getSB() {
+  if (!_sbClient) _sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return _sbClient;
 }
-var supabase = new Proxy({}, {
-  get: (_, prop) => getSupabase()[prop]
-});
+// Global alias so pages can use `supabase.from(...)` directly
+var supabase = {
+  from: (...a) => getSB().from(...a),
+  auth: {
+    getSession: (...a) => getSB().auth.getSession(...a),
+    getUser: (...a) => getSB().auth.getUser(...a),
+    signOut: (...a) => getSB().auth.signOut(...a),
+    signInWithPassword: (...a) => getSB().auth.signInWithPassword(...a),
+    signUp: (...a) => getSB().auth.signUp(...a),
+    onAuthStateChange: (...a) => getSB().auth.onAuthStateChange(...a),
+  }
+};
 
 // ---- Auth Guard ----
 async function requireAuth() {
-  const { data } = await getSupabase().auth.getSession();
+  const { data } = await getSB().auth.getSession();
   if (!data.session) { window.location.href = 'index.html'; return null; }
   return data.session;
 }
 
 async function getUser() {
-  const { data } = await getSupabase().auth.getUser();
+  const { data } = await getSB().auth.getUser();
   return data.user;
 }
 
 function doLogout() {
-  getSupabase().auth.signOut().then(() => { window.location.href = 'index.html'; });
+  getSB().auth.signOut().then(() => { window.location.href = 'index.html'; });
 }
 
 // ---- Formatters ----
