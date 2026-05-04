@@ -5,44 +5,48 @@
 const SUPABASE_URL = 'https://woagfgjsbmxeizglomfh.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 
-// Lazy init - handles different Supabase CDN export formats
+// Load Supabase CDN dynamically (same proven approach as login page)
+// and call initPage() on each page once it's ready
 var _sbClient = null;
-function getSB() {
-  if (!_sbClient) {
-    var sb = window.supabase;
-    var createClient = sb.createClient || (sb.default && sb.default.createClient);
-    if (!createClient) throw new Error('Supabase CDN not loaded correctly');
-    _sbClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+(function() {
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = function() {
+    _sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (typeof initPage === 'function') initPage();
+  };
+  s.onerror = function() {
+    console.error('Failed to load Supabase CDN');
+  };
+  document.head.appendChild(s);
+})();
+
+function getSB() { return _sbClient; }
+
+// Proxy so pages using `supabase.from()` or `supabase.auth` work unchanged
+var supabase = new Proxy({}, {
+  get: function(_, prop) {
+    if (!_sbClient) throw new Error('Supabase not ready yet');
+    return _sbClient[prop];
   }
-  return _sbClient;
-}
-// Global alias so pages can use `supabase.from(...)` directly
-var supabase = {
-  from: (...a) => getSB().from(...a),
-  auth: {
-    getSession: (...a) => getSB().auth.getSession(...a),
-    getUser: (...a) => getSB().auth.getUser(...a),
-    signOut: (...a) => getSB().auth.signOut(...a),
-    signInWithPassword: (...a) => getSB().auth.signInWithPassword(...a),
-    signUp: (...a) => getSB().auth.signUp(...a),
-    onAuthStateChange: (...a) => getSB().auth.onAuthStateChange(...a),
-  }
-};
+});
 
 // ---- Auth Guard ----
 async function requireAuth() {
-  const { data } = await getSB().auth.getSession();
+  const { data } = await _sbClient.auth.getSession();
   if (!data.session) { window.location.href = 'index.html'; return null; }
   return data.session;
 }
 
 async function getUser() {
-  const { data } = await getSB().auth.getUser();
+  const { data } = await _sbClient.auth.getUser();
   return data.user;
 }
 
 function doLogout() {
-  getSB().auth.signOut().then(() => { window.location.href = 'index.html'; });
+  _sbClient.auth.signOut().then(function() {
+    window.location.href = 'index.html';
+  });
 }
 
 // ---- Formatters ----

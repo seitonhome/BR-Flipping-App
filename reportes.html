@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
-<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="js/app.js"></script>
 <style>
@@ -206,7 +206,7 @@ Chart.defaults.font.family = "'DM Sans', sans-serif";
 
 const CC = { gold:'#C9A84C', green:'#4CAF7C', red:'#E05555', blue:'#5B9BD5', purple:'#A585E8', orange:'#E8A83C', gray:'#5A5754' };
 
-async function init() {
+async function initPage() {
   const session = await requireAuth(); if (!session) return;
   const user = session.user;
   const nombre = user.user_metadata?.nombre || user.email.split('@')[0];
@@ -386,7 +386,7 @@ function renderInsights(filtered, vendidos, activos) {
   $('insights-box').innerHTML = insights.map(i => `<div class="insight-box"><span class="insight-icon">${i.icon}</span><div class="insight-text"><strong>${i.title}</strong>${i.text}</div></div>`).join('');
 }
 
-init();
+// initPage() is called by app.js after Supabase loads
 </script>
 </body>
 </html>
