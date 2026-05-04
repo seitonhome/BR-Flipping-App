@@ -5,10 +5,15 @@
 const SUPABASE_URL = 'https://woagfgjsbmxeizglomfh.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 
-// Lazy init - only creates client when first needed (CDN guaranteed loaded by then)
+// Lazy init - handles different Supabase CDN export formats
 var _sbClient = null;
 function getSB() {
-  if (!_sbClient) _sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  if (!_sbClient) {
+    var sb = window.supabase;
+    var createClient = sb.createClient || (sb.default && sb.default.createClient);
+    if (!createClient) throw new Error('Supabase CDN not loaded correctly');
+    _sbClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
   return _sbClient;
 }
 // Global alias so pages can use `supabase.from(...)` directly
