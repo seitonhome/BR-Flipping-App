@@ -215,7 +215,7 @@ async function initPage() {
 }
 
 async function loadData() {
-  const { data } = await supabase.from('proyectos').select('*').order('fecha_venta', { ascending: true });
+  const { data } = await _sbClient.from('proyectos').select('*').order('fecha_venta', { ascending: true });
   allP = data || [];
   renderAll();
 }

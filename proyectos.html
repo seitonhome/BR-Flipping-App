@@ -198,7 +198,7 @@ async function initPage() {
 }
 
 async function loadProyectos() {
-  const { data, error } = await supabase.from('proyectos').select('*').order('created_at', { ascending: false });
+  const { data, error } = await _sbClient.from('proyectos').select('*').order('created_at', { ascending: false });
   if (error) return;
   allProyectos = data;
   renderGrid(data);
@@ -327,7 +327,7 @@ async function updateEstado() {
     }
   }
   
-  const { error } = await supabase.from('proyectos').update(updates).eq('id', currentId);
+  const { error } = await _sbClient.from('proyectos').update(updates).eq('id', currentId);
   if (error) { toast('Error: ' + error.message, 'error'); return; }
   toast('Estado actualizado correctamente', 'success');
   closeModal(); await loadProyectos();
@@ -335,7 +335,7 @@ async function updateEstado() {
 
 async function saveNotas() {
   if (!currentId) return;
-  const { error } = await supabase.from('proyectos').update({ notas: $('m-notas').value }).eq('id', currentId);
+  const { error } = await _sbClient.from('proyectos').update({ notas: $('m-notas').value }).eq('id', currentId);
   if (error) { toast('Error: ' + error.message, 'error'); return; }
   toast('Notas guardadas', 'success');
 }
@@ -343,7 +343,7 @@ async function saveNotas() {
 async function deleteProyecto() {
   if (!currentId) return;
   if (!confirm('¿Eliminar este proyecto permanentemente? Esta acción no se puede deshacer.')) return;
-  const { error } = await supabase.from('proyectos').delete().eq('id', currentId);
+  const { error } = await _sbClient.from('proyectos').delete().eq('id', currentId);
   if (error) { toast('Error: ' + error.message, 'error'); return; }
   toast('Proyecto eliminado', 'info');
   closeModal(); await loadProyectos();

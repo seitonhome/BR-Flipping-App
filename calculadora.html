@@ -633,7 +633,7 @@ async function guardarProyecto() {
   const btn = $('btn-guardar');
   btn.disabled = true; btn.textContent = 'Guardando...';
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await _sbClient.auth.getUser();
 
   const row = {
     user_id: user.id,
@@ -670,7 +670,7 @@ async function guardarProyecto() {
     tipo_contribuyente: $('f-contrib').value,
   };
 
-  const { error } = await supabase.from('proyectos').insert(row);
+  const { error } = await _sbClient.from('proyectos').insert(row);
   if (error) {
     toast('Error al guardar: ' + error.message, 'error');
     btn.disabled = false; btn.textContent = 'Guardar proyecto';
