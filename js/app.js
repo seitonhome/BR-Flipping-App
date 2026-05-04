@@ -5,19 +5,19 @@
 const SUPABASE_URL = 'https://woagfgjsbmxeizglomfh.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYWdmZ2pzYm14ZWl6Z2xvbWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDY2MjQsImV4cCI6MjA5MzQyMjYyNH0.yMjM8uPSAUge5IA3Aw_euZagyqXPKk_hHLSo4GxOmwo';
 
-// Supabase client
-var supabase;
-try {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-} catch(e) {
-  console.error('Supabase init error:', e);
+// Supabase - lazy init via Proxy, works regardless of script load order
+var _sb = null;
+function getSupabase() {
+  if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return _sb;
 }
-function getSupabase() { return supabase; }
+var supabase = new Proxy({}, {
+  get: (_, prop) => getSupabase()[prop]
+});
 
 // ---- Auth Guard ----
 async function requireAuth() {
-  const sb = getSupabase();
-  const { data } = await sb.auth.getSession();
+  const { data } = await getSupabase().auth.getSession();
   if (!data.session) { window.location.href = 'index.html'; return null; }
   return data.session;
 }
@@ -28,7 +28,7 @@ async function getUser() {
 }
 
 function doLogout() {
-  supabase.auth.signOut().then(() => { window.location.href = 'index.html'; });
+  getSupabase().auth.signOut().then(() => { window.location.href = 'index.html'; });
 }
 
 // ---- Formatters ----
