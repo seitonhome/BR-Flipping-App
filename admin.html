@@ -191,24 +191,17 @@
                 </tr>
               </thead>
               <tbody>
-                ${[
-                  ['Ver dashboard y reportes', '✓', '✓', '✓'],
-                  ['Usar calculadora', '✓', '✓', '✓'],
-                  ['Crear proyectos', '✓', '✓', '✓'],
-                  ['Editar proyectos', '✓', '✓', '✓'],
-                  ['Subir fotos', '✓', '✓', '✓'],
-                  ['Registrar gastos', '✓', '✓', '✓'],
-                  ['Seguimiento remodelación', '✓', '✓', '✓'],
-                  ['Eliminar proyectos', '✗', '✓', '✓'],
-                  ['Ver reportes completos', '✗', '✓', '✓'],
-                  ['Gestionar usuarios', '✗', '✗', '✓'],
-                  ['Panel administración', '✗', '✗', '✓'],
-                ].map(([f,a,g,ad]) => `<tr>
-                  <td class="primary">${f}</td>
-                  <td style="text-align:center;color:${a==='✓'?'var(--success)':'var(--danger)'};">${a}</td>
-                  <td style="text-align:center;color:${g==='✓'?'var(--success)':'var(--danger)'};">${g}</td>
-                  <td style="text-align:center;color:${ad==='✓'?'var(--success)':'var(--danger)'};">${ad}</td>
-                </tr>`).join('')}
+                <tr><td class="primary">Ver dashboard y reportes</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Usar calculadora</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Crear proyectos</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Editar proyectos</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Subir fotos</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Registrar gastos</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Seguimiento remodelación</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Eliminar proyectos</td><td style="text-align:center;color:var(--danger)">✗</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Ver reportes completos</td><td style="text-align:center;color:var(--danger)">✗</td><td style="text-align:center;color:var(--success)">✓</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Gestionar usuarios</td><td style="text-align:center;color:var(--danger)">✗</td><td style="text-align:center;color:var(--danger)">✗</td><td style="text-align:center;color:var(--success)">✓</td></tr>
+              <tr><td class="primary">Panel administración</td><td style="text-align:center;color:var(--danger)">✗</td><td style="text-align:center;color:var(--danger)">✗</td><td style="text-align:center;color:var(--success)">✓</td></tr>
               </tbody>
             </table>
           </div>
@@ -403,25 +396,7 @@ function showMsg(id, text, type) {
   el.className = 'msg ' + type + ' show';
 }
 
-// Render permissions table
-document.querySelector('tbody').innerHTML = [
-  ['Ver dashboard y reportes', '✓', '✓', '✓'],
-  ['Usar calculadora', '✓', '✓', '✓'],
-  ['Crear proyectos', '✓', '✓', '✓'],
-  ['Editar proyectos', '✓', '✓', '✓'],
-  ['Subir fotos', '✓', '✓', '✓'],
-  ['Registrar gastos', '✓', '✓', '✓'],
-  ['Seguimiento remodelación', '✓', '✓', '✓'],
-  ['Eliminar proyectos', '✗', '✓', '✓'],
-  ['Ver reportes completos', '✗', '✓', '✓'],
-  ['Gestionar usuarios', '✗', '✗', '✓'],
-  ['Panel administración', '✗', '✗', '✓'],
-].map(([f,a,g,ad]) => `<tr>
-  <td class="primary">${f}</td>
-  <td style="text-align:center;color:${a==='✓'?'var(--success)':'var(--danger)'};">${a}</td>
-  <td style="text-align:center;color:${g==='✓'?'var(--success)':'var(--danger)'};">${g}</td>
-  <td style="text-align:center;color:${ad==='✓'?'var(--success)':'var(--danger)'};">${ad}</td>
-</tr>`).join('');
+// Permissions table rendered in HTML
 
 document.getElementById('modal-edit').addEventListener('click', e => {
   if (e.target === document.getElementById('modal-edit')) closeEditModal();
