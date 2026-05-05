@@ -132,15 +132,60 @@ function calcFiscal({ precioCompra, precioVenta, costoRemo, pctComision, duracio
   return { totGC, totGV, notarialC, beneficencia, adminC, notarialV, comision, adminV, tasaRet, retencion, costoFiscal, utilBruta, impGO, impGONeto, notaGO, predialP, adminTotal, finTotal, totalTenencia, totalInv, totalEgr, utilNeta, margen, roi, roiAnual };
 }
 
+// ---- B&R Inversiones — Parámetros de viabilidad ----
+// Margen neto mínimo: 25% sobre precio de venta
+// Remodelación: entre 15% y 20% del precio de compra
+// Duración ideal: 3 meses (1 compra + 1 remo + 1 venta)
+// Alarma: proyecto con más de 5 meses sin vender
+const BR_MARGEN_MIN = 25;        // % mínimo sobre precio venta
+const BR_REMO_MIN = 15;          // % mínimo remodelación
+const BR_REMO_MAX = 20;          // % máximo remodelación
+const BR_DURACION_IDEAL = 3;     // meses ideal
+const BR_DURACION_ALARMA = 5;    // meses → alarma
+
 function viabilidad(d) {
+  // Criterio 1: Margen neto >= 25% (obligatorio)
+  const margenOk = d.margen * 100 >= BR_MARGEN_MIN;
+  const margenWarn = d.margen * 100 >= 15;
+
+  // Criterio 2: Remodelación entre 15% y 20% del precio compra
+  const remoOk = d.pctRemo >= BR_REMO_MIN && d.pctRemo <= BR_REMO_MAX;
+  const remoWarn = d.pctRemo < BR_REMO_MIN || (d.pctRemo > BR_REMO_MAX && d.pctRemo <= 25);
+
+  // Criterio 3: Duración ideal <= 3 meses (hasta 5 es aceptable)
+  const durOk = (d.duracion || 0) <= BR_DURACION_IDEAL;
+  const durWarn = (d.duracion || 0) <= BR_DURACION_ALARMA;
+
+  // Criterio 4: Utilidad neta positiva (sin esto no hay negocio)
+  const utilOk = d.utilNeta > 0;
+
   const checks = [
-    { ok: d.pctRemo <= 20, warn: d.pctRemo <= 25, key: 'remo' },
-    { ok: d.margen * 100 >= 25, warn: d.margen * 100 >= 15, key: 'margen' },
-    { ok: d.roi * 100 >= 20, warn: d.roi * 100 >= 10, key: 'roi' },
-    { ok: d.utilNeta > 0, warn: false, key: 'utilidad' },
+    { ok: margenOk, warn: margenWarn, key: 'margen' },
+    { ok: remoOk, warn: remoWarn, key: 'remo' },
+    { ok: durOk, warn: durWarn, key: 'duracion' },
+    { ok: utilOk, warn: false, key: 'utilidad' },
   ];
+
   const pasados = checks.filter(c => c.ok).length;
   const advertencias = checks.filter(c => !c.ok && c.warn).length;
-  let verdict = pasados >= 3 ? 'viable' : (pasados >= 2 || advertencias >= 2 ? 'marginal' : 'noviable');
-  return { checks, pasados, advertencias, verdict };
+
+  // Viable: margen >= 25% Y utilidad positiva (los dos obligatorios)
+  // + al menos uno de: remo OK, duración OK
+  let verdict;
+  if (margenOk && utilOk && (remoOk || durOk)) verdict = 'viable';
+  else if (margenWarn && utilOk) verdict = 'marginal';
+  else verdict = 'noviable';
+
+  return { checks, pasados, advertencias, verdict, margenOk, remoOk, durOk, utilOk };
+}
+
+// Alarma de tiempo para proyectos activos
+function alarmaProyecto(fechaCompra) {
+  if (!fechaCompra) return null;
+  const hoy = new Date();
+  const compra = new Date(fechaCompra);
+  const meses = (hoy - compra) / (1000 * 60 * 60 * 24 * 30.44);
+  if (meses >= BR_DURACION_ALARMA) return { tipo: 'critica', meses: Math.round(meses * 10) / 10 };
+  if (meses >= BR_DURACION_IDEAL) return { tipo: 'advertencia', meses: Math.round(meses * 10) / 10 };
+  return { tipo: 'ok', meses: Math.round(meses * 10) / 10 };
 }

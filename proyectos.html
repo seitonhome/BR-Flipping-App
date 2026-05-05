@@ -229,12 +229,19 @@ function renderGrid(proyectos) {
   grid.innerHTML = proyectos.map(p => {
     const stageIdx = ESTADOS.indexOf(p.estado);
     const dots = ESTADOS.map((e, i) => `<div class="stage-dot" style="background:${i <= stageIdx ? 'var(--gold)' : 'var(--dark5)'}"></div>`).join('');
-    const mColor = (p.margen_neto||0) >= 25 ? 'pos' : (p.margen_neto||0) >= 15 ? 'gold' : 'neg';
+    const mColor = (p.margen_neto||0) >= 25 ? 'pos' : (p.margen_neto||0) >= 20 ? 'gold' : 'neg';
     const rColor = (p.roi||0) >= 20 ? 'pos' : (p.roi||0) >= 10 ? 'gold' : 'neg';
+    // Alarma B&R tiempo
+    let alarmaBadge = '';
+    if (!['vendido','cancelado'].includes(p.estado) && p.fecha_compra) {
+      const meses = (new Date() - new Date(p.fecha_compra)) / (1000*60*60*24*30.44);
+      if (meses >= 5) alarmaBadge = `<span style="background:#3A1A1A;color:#F07070;font-size:10px;padding:2px 8px;border-radius:10px;border:1px solid rgba(224,85,85,0.3);">🚨 ${Math.round(meses)}m</span>`;
+      else if (meses >= 3) alarmaBadge = `<span style="background:#2A1F0A;color:#E8A83C;font-size:10px;padding:2px 8px;border-radius:10px;border:1px solid rgba(232,168,60,0.3);">⚠ ${Math.round(meses)}m</span>`;
+    }
     return `<div class="proj-card" data-e="${p.estado}" onclick="openModal(allProyectos.find(x=>x.id==='${p.id}'))">
       <div class="proj-card-accent"></div>
       <div class="proj-header">
-        <div><div class="proj-name">${p.nombre}</div><div class="proj-addr">${p.ciudad||''} ${p.metros_cuadrados ? '· '+p.metros_cuadrados+'m²' : ''}</div></div>
+        <div><div class="proj-name">${p.nombre} ${alarmaBadge}</div><div class="proj-addr">${p.ciudad||''} ${p.metros_cuadrados ? '· '+p.metros_cuadrados+'m²' : ''}</div></div>
         <span class="badge badge-${p.estado}">${ESTADO_LABELS[p.estado]||p.estado}</span>
       </div>
       <div class="proj-metrics">

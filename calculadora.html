@@ -513,25 +513,26 @@ function fullCalc() {
   const vColors = { viable: 'success', marginal: 'warning', noviable: 'danger' };
   const vIcons = { viable: '✓', marginal: '⚠', noviable: '✗' };
   const vTitles = { viable: 'Proyecto viable', marginal: 'Proyecto marginal — revisar', noviable: 'Proyecto no viable' };
+  const vb2 = viabilidad({ pctRemo: pctR * 100, margen: d.margen, roi: d.roi, utilNeta: d.utilNeta, duracion: dur });
   const vTexts = {
-    viable: `Cumple ${vb.pasados}/4 criterios de flipping. Con un margen neto de ${fmtPct(d.margen*100)} y ROI de ${fmtPct(d.roi*100)}, el proyecto presenta condiciones favorables.`,
-    marginal: `Cumple ${vb.pasados}/4 criterios. Ajusta precio de compra, costo de remodelación o precio de venta antes de proceder.`,
-    noviable: `Solo cumple ${vb.pasados}/4 criterios. Los números actuales no soportan un negocio rentable. Se requieren cambios estructurales.`
+    viable: `Proyecto VIABLE para B&R Inversiones. Margen neto ${fmtPct(d.margen*100)} — supera el mínimo del 25%. Remodelación ${fmtPct(pctR*100)} dentro del rango 15-20%. Duración estimada ${dur} meses.`,
+    marginal: `Proyecto MARGINAL. El margen neto de ${fmtPct(d.margen*100)} está cerca pero no cumple todos los criterios B&R. Revisa: remodelación debe estar entre 15-20% (actualmente ${fmtPct(pctR*100)}), duración ideal 3 meses.`,
+    noviable: `Proyecto NO VIABLE para B&R Inversiones. El margen neto de ${fmtPct(d.margen*100)} no alcanza el mínimo del 25%. Se requiere renegociar precio de compra o ajustar precio de venta objetivo.`
   };
   $('verdict-box').innerHTML = `<div class="verdict verdict-${vb.verdict}"><div class="verdict-icon">${vIcons[vb.verdict]}</div><div><div class="verdict-title">${vTitles[vb.verdict]}</div><div class="verdict-desc">${vTexts[vb.verdict]}</div></div></div>`;
 
   // Gauges
   const gaugeData = [
-    { label: 'Margen neto', val: d.margen * 100, meta: 25, unit: '%', color: d.margen * 100 >= 25 ? 'var(--success)' : d.margen * 100 >= 15 ? 'var(--warning)' : 'var(--danger)', max: 50 },
-    { label: 'ROI total', val: d.roi * 100, meta: 20, unit: '%', color: d.roi * 100 >= 20 ? 'var(--success)' : d.roi * 100 >= 10 ? 'var(--warning)' : 'var(--danger)', max: 40 },
-    { label: 'ROI anualizado', val: d.roiAnual * 100, meta: 24, unit: '%', color: d.roiAnual * 100 >= 24 ? 'var(--success)' : 'var(--warning)', max: 48 },
+    { label: 'Margen neto B&R', val: d.margen * 100, meta: 25, unit: '%', color: d.margen * 100 >= 25 ? 'var(--success)' : d.margen * 100 >= 20 ? 'var(--warning)' : 'var(--danger)', max: 50, metaLabel: 'Mínimo B&R: 25%' },
+    { label: 'Remodelación', val: pctR * 100, meta: 20, unit: '%', color: (pctR*100 >= 15 && pctR*100 <= 20) ? 'var(--success)' : pctR*100 <= 25 ? 'var(--warning)' : 'var(--danger)', max: 35, metaLabel: 'Rango B&R: 15-20%' },
+    { label: 'Duración estimada', val: dur, meta: 3, unit: ' meses', color: dur <= 3 ? 'var(--success)' : dur <= 5 ? 'var(--warning)' : 'var(--danger)', max: 12, metaLabel: 'Ideal B&R: 3 meses' },
   ];
   $('gauges').innerHTML = gaugeData.map(g => `
     <div class="gauge-wrap">
       <div class="gauge-label">${g.label}</div>
-      <div class="gauge-value" style="color:${g.color}">${fmtPct(g.val)}</div>
+      <div class="gauge-value" style="color:${g.color}">${g.unit === ' meses' ? g.val + g.unit : fmtPct(g.val)}</div>
       <div class="gauge-bar"><div class="gauge-fill" style="width:${Math.min(100, Math.max(0, g.val / g.max * 100))}%;background:${g.color}"></div></div>
-      <div class="gauge-target">Meta: ${g.meta}%</div>
+      <div class="gauge-target">${g.metaLabel}</div>
     </div>
   `).join('');
 
@@ -578,12 +579,42 @@ function fullCalc() {
   ].map(([l, v]) => `<div class="result-row"><span class="result-label">${l}</span><span class="result-val">${fmtCOP(v)}</span></div>`).join('')
   + `<div class="result-row subtotal"><span class="result-label">Total egresos venta</span><span class="result-val text-gold">${fmtCOP(d.totGV + d.retencion + d.impGONeto)}</span></div>`;
 
-  // Checklist
+  // Checklist B&R — parámetros exactos
   const chks = [
-    { pass: pctR * 100 <= 20, warn: pctR * 100 <= 25, title: `Remodelación: ${fmtPct(pctR * 100)} del precio de compra`, pass_t: 'Dentro del límite recomendado (≤ 20%). Buen control de costos.', warn_t: 'Ligeramente por encima del 20%. Reduce alcance o negocia mejor precio de compra.', fail_t: 'Supera el 25%. La remodelación consume demasiado margen.' },
-    { pass: d.margen * 100 >= 25, warn: d.margen * 100 >= 15, title: `Margen neto: ${fmtPct(d.margen * 100)}`, pass_t: 'Supera el 25% mínimo recomendado para flipping.', warn_t: 'Entre 15-25%. Viable pero sin margen de error ante imprevistos.', fail_t: 'Bajo el 15%. Muy riesgoso. Ajusta precio compra o venta.' },
-    { pass: d.roi * 100 >= 20, warn: d.roi * 100 >= 10, title: `ROI sobre inversión: ${fmtPct(d.roi * 100)}`, pass_t: 'ROI superior al 20%. Retorno atractivo.', warn_t: 'ROI entre 10-20%. Considera el costo de oportunidad del capital.', fail_t: 'ROI inferior al 10%. Existen mejores alternativas de inversión.' },
-    { pass: d.utilNeta > 0, warn: false, title: `Utilidad neta: ${fmtCOPShort(d.utilNeta)}`, pass_t: 'El proyecto genera utilidad después de todos los impuestos y gastos.', warn_t: '', fail_t: 'El proyecto arroja pérdida neta. No proceder.' },
+    {
+      pass: d.margen * 100 >= 25,
+      warn: d.margen * 100 >= 20,
+      title: `Margen neto B&R: ${fmtPct(d.margen * 100)} sobre precio de venta`,
+      pass_t: `✓ Supera el 25% mínimo de B&R Inversiones. Proyecto rentable.`,
+      warn_t: `⚠ Entre 20-25%. Está cerca pero no alcanza el mínimo del 25% de B&R.`,
+      fail_t: `✗ No alcanza el 25% mínimo de B&R. Renegociar precio de compra o aumentar precio de venta.`
+    },
+    {
+      pass: pctR * 100 >= 15 && pctR * 100 <= 20,
+      warn: pctR * 100 < 15 || (pctR * 100 > 20 && pctR * 100 <= 25),
+      title: `Remodelación: ${fmtPct(pctR * 100)} del precio de compra`,
+      pass_t: `✓ Dentro del rango ideal B&R (15%-20%). Control de costos correcto.`,
+      warn_t: pctR * 100 < 15
+        ? `⚠ Por debajo del 15%. Puede indicar remodelación insuficiente para aumentar valor.`
+        : `⚠ Entre 20-25%. Por encima del límite B&R. Revisar alcance de la obra.`,
+      fail_t: `✗ Supera el 20% máximo de B&R. La remodelación está consumiendo el margen.`
+    },
+    {
+      pass: dur <= 3,
+      warn: dur <= 5,
+      title: `Duración del proyecto: ${dur} meses`,
+      pass_t: `✓ Dentro del ideal B&R (3 meses: 1 compra + 1 remo + 1 venta).`,
+      warn_t: `⚠ Entre 3-5 meses. Aceptable pero por encima del ideal. Acelerar proceso de venta.`,
+      fail_t: `✗ Más de 5 meses. ALARMA — el proyecto supera el tiempo máximo de B&R. Riesgo de costos de tenencia.`
+    },
+    {
+      pass: d.utilNeta > 0,
+      warn: false,
+      title: `Utilidad neta: ${fmtCOPShort(d.utilNeta)}`,
+      pass_t: `✓ El proyecto genera utilidad positiva después de impuestos y todos los gastos.`,
+      warn_t: ``,
+      fail_t: `✗ El proyecto arroja pérdida. No proceder bajo ninguna circunstancia.`
+    },
   ];
   $('checklist-full').innerHTML = chks.map(c => {
     const cls = c.pass ? 'pass' : (c.warn ? 'warn' : 'fail');

@@ -146,6 +146,7 @@
     <div class="page-content">
 
       <!-- KPI METRICS -->
+      <div id="alarma-banner"></div>
       <div class="metrics-grid mb-3" id="kpi-grid">
         <div class="metric gold"><div class="metric-label">Capital invertido activo</div><div class="metric-value" id="kpi-capital">—</div><div class="metric-delta"><span id="kpi-proj-activos">0</span> proyectos activos</div></div>
         <div class="metric green"><div class="metric-label">Utilidad acumulada</div><div class="metric-value" id="kpi-utilidad">—</div><div class="metric-delta"><span id="kpi-proj-cerrados">0</span> proyectos cerrados</div></div>
@@ -286,6 +287,30 @@ async function loadDashboard() {
 
   // KPIs
   const activos = proyectos.filter(p => !['vendido','cancelado'].includes(p.estado));
+  
+  // Alarmas B&R: proyectos activos con más de 5 meses
+  const vencidos = activos.filter(p => {
+    if (!p.fecha_compra) return false;
+    const meses = (new Date() - new Date(p.fecha_compra)) / (1000*60*60*24*30.44);
+    return meses >= 5;
+  });
+  const enRiesgo = activos.filter(p => {
+    if (!p.fecha_compra) return false;
+    const meses = (new Date() - new Date(p.fecha_compra)) / (1000*60*60*24*30.44);
+    return meses >= 3 && meses < 5;
+  });
+  
+  // Show alarm banner
+  const bannerEl = document.getElementById('alarma-banner');
+  if (bannerEl) {
+    if (vencidos.length > 0) {
+      bannerEl.innerHTML = `<div style="background:#3A1A1A;border:1px solid rgba(224,85,85,0.4);border-radius:12px;padding:12px 18px;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;"><span style="font-size:20px;">🚨</span><div><strong style="color:#F07070;">ALARMA: ${vencidos.length} proyecto(s) llevan más de 5 meses sin vender</strong><div style="font-size:13px;color:#c08080;margin-top:2px;">${vencidos.map(p=>`<strong>${p.nombre}</strong>`).join(', ')} — Requieren atención inmediata.</div></div></div>`;
+    } else if (enRiesgo.length > 0) {
+      bannerEl.innerHTML = `<div style="background:#2A1F0A;border:1px solid rgba(232,168,60,0.4);border-radius:12px;padding:12px 18px;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;"><span style="font-size:20px;">⚠️</span><div><strong style="color:#E8A83C;">${enRiesgo.length} proyecto(s) llevan más de 3 meses — acelerar venta</strong><div style="font-size:13px;color:#b08040;margin-top:2px;">${enRiesgo.map(p=>`<strong>${p.nombre}</strong>`).join(', ')}</div></div></div>`;
+    } else {
+      bannerEl.innerHTML = '';
+    }
+  }
   const vendidos = proyectos.filter(p => p.estado === 'vendido');
   const capitalActivo = activos.reduce((s, p) => s + (p.precio_compra || 0), 0);
   const utilidadTotal = vendidos.reduce((s, p) => s + (p.utilidad_neta || 0), 0);
@@ -439,18 +464,26 @@ function renderTabla(proyectos) {
     tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🏠</div><h3>Sin proyectos aún</h3><p>Usa la calculadora para evaluar tu primer proyecto</p></div></td></tr>`;
     return;
   }
-  tbody.innerHTML = proyectos.map(p => `
-    <tr onclick="location.href='proyectos.html?id=${p.id}'" style="cursor:pointer;">
-      <td class="primary">${p.nombre}</td>
+  tbody.innerHTML = proyectos.map(p => {
+    // Alarma de tiempo B&R: proyectos activos con más de 5 meses
+    let alarma = '';
+    if (!['vendido','cancelado'].includes(p.estado) && p.fecha_compra) {
+      const meses = (new Date() - new Date(p.fecha_compra)) / (1000*60*60*24*30.44);
+      if (meses >= 5) alarma = `<span style="margin-left:6px;background:#3A1A1A;color:#F07070;font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid rgba(224,85,85,0.3);">⚠ ${Math.round(meses)}m</span>`;
+      else if (meses >= 3) alarma = `<span style="margin-left:6px;background:#2A1F0A;color:#E8A83C;font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid rgba(232,168,60,0.3);">⏱ ${Math.round(meses)}m</span>`;
+    }
+    const margenColor = (p.margen_neto||0) >= 25 ? 'var(--success)' : (p.margen_neto||0) >= 20 ? 'var(--warning)' : 'var(--danger)';
+    return `<tr onclick="location.href='proyectos.html?id=${p.id}'" style="cursor:pointer;">
+      <td class="primary">${p.nombre}${alarma}</td>
       <td>${p.ciudad || '—'}</td>
       <td><span class="badge badge-${p.estado}">${ESTADO_LABELS[p.estado] || p.estado}</span></td>
       <td>${fmtCOPShort(p.precio_compra)}</td>
       <td>${fmtCOPShort(p.precio_venta_real || p.precio_venta_objetivo)}</td>
       <td style="color:${(p.utilidad_neta||0) >= 0 ? 'var(--success)' : 'var(--danger)'};font-weight:500">${fmtCOPShort(p.utilidad_neta)}</td>
-      <td style="color:${(p.margen_neto||0) >= 25 ? 'var(--success)' : (p.margen_neto||0) >= 15 ? 'var(--warning)' : 'var(--danger)'};">${p.margen_neto ? fmtPct(p.margen_neto) : '—'}</td>
+      <td style="color:${margenColor};font-weight:500">${p.margen_neto ? fmtPct(p.margen_neto) : '—'}</td>
       <td>${p.roi ? fmtPct(p.roi) : '—'}</td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 }
 
 // initPage() is called by app.js after Supabase loads
