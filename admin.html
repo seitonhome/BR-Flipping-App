@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&R Inversiones — Admin</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<script src="js/app.js"></script>
+<style>
+.user-row-admin {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: var(--dark4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.user-row-admin:hover { border-color: var(--border-mid); }
+.user-info { flex: 1; }
+.user-name-a { font-size: 14px; font-weight: 500; color: var(--text); }
+.user-email-a { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.role-badge {
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+}
+.role-admin { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.role-gerente { background: rgba(91,155,213,0.15); color: var(--info); border: 1px solid rgba(91,155,213,0.3); }
+.role-agente { background: rgba(76,175,124,0.12); color: var(--success); border: 1px solid rgba(76,175,124,0.25); }
+.role-select {
+  height: 32px; padding: 0 10px;
+  background: var(--dark3); border: 1px solid var(--border-dim);
+  border-radius: 8px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  outline: none; cursor: pointer;
+}
+.role-select:focus { border-color: var(--gold); }
+.action-btns { display: flex; gap: 6px; }
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+.stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-dim); font-size: 13px; }
+.stat-row:last-child { border-bottom: none; }
+.stat-label { color: var(--text-muted); }
+.stat-val { font-weight: 500; color: var(--text); }
+</style>
+</head>
+<body>
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo" style="flex-direction:column;align-items:center;padding:1.25rem 1rem;gap:10px;">
+      <img src="assets/logo.png" alt="B&R Inversiones" style="width:108px;height:108px;border-radius:20px;object-fit:cover;">
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);text-align:center;">B<span style="color:var(--gold)">&amp;R</span> Inversiones</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Principal</div>
+      <button class="nav-item" onclick="location.href='dashboard.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="location.href='proyectos.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>
+        Proyectos
+      </button>
+      <button class="nav-item" onclick="location.href='calculadora.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>
+        Calculadora
+      </button>
+      <div class="nav-label">Admin</div>
+      <button class="nav-item active">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Administración
+      </button>
+      <div class="nav-label">Reportes</div>
+      <button class="nav-item" onclick="location.href='reportes.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Reportes & KPIs
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card" onclick="doLogout()">
+        <div class="user-avatar" id="user-av">?</div>
+        <div><div class="user-name" id="user-nm">Cargando...</div><div class="user-role">Cerrar sesión</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">Administración</div>
+      <span style="font-size:12px;background:rgba(201,168,76,0.12);color:var(--gold);padding:4px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.25);">Solo administradores</span>
+    </div>
+
+    <div class="page-content">
+      <!-- TABS -->
+      <div class="tabs mb-3">
+        <button class="tab-btn active" onclick="switchTab('usuarios')">Usuarios del equipo</button>
+        <button class="tab-btn" onclick="switchTab('nuevo')">Crear usuario</button>
+        <button class="tab-btn" onclick="switchTab('roles')">Roles y permisos</button>
+      </div>
+
+      <!-- TAB: USUARIOS -->
+      <div id="tab-usuarios" class="tab-section active">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Usuarios activos</div>
+              <span id="user-count" class="text-muted text-sm">0 usuarios</span>
+            </div>
+            <div id="lista-usuarios-admin">
+              <div style="text-align:center;padding:2rem;color:var(--text-dim);">Cargando...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Estadísticas del equipo</div></div>
+            <div id="team-stats">
+              <div class="stat-row"><span class="stat-label">Total usuarios</span><span class="stat-val" id="st-total">—</span></div>
+              <div class="stat-row"><span class="stat-label">Administradores</span><span class="stat-val" id="st-admin">—</span></div>
+              <div class="stat-row"><span class="stat-label">Gerentes</span><span class="stat-val" id="st-gerente">—</span></div>
+              <div class="stat-row"><span class="stat-label">Agentes</span><span class="stat-val" id="st-agente">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: CREAR USUARIO -->
+      <div id="tab-nuevo" class="tab-section">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Crear nuevo usuario</div></div>
+            <div class="form-grid cols-1" style="gap:1rem;">
+              <div class="field">
+                <label>Nombre completo *</label>
+                <input type="text" id="new-nombre" placeholder="Juan Pérez">
+              </div>
+              <div class="field">
+                <label>Correo electrónico *</label>
+                <input type="email" id="new-email" placeholder="juan@brinversiones.co">
+              </div>
+              <div class="field">
+                <label>Contraseña temporal *</label>
+                <input type="password" id="new-pass" placeholder="Mínimo 6 caracteres">
+              </div>
+              <div class="field">
+                <label>Rol</label>
+                <select id="new-rol">
+                  <option value="agente">Agente</option>
+                  <option value="gerente">Gerente</option>
+                  <option value="admin">Administrador</option>
+                </select>
+              </div>
+              <button class="btn btn-gold btn-lg" id="btn-crear" onclick="crearUsuario()">Crear usuario</button>
+              <div class="msg" id="msg-crear"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title mb-2">Guía de roles</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:1rem;">
+              <div style="padding:14px;background:var(--dark4);border-radius:var(--radius-sm);border-left:3px solid var(--gold);">
+                <div style="font-size:13px;font-weight:600;color:var(--gold);margin-bottom:4px;">Administrador</div>
+                <div style="font-size:12px;color:var(--text-muted);">Acceso total. Puede crear usuarios, ver todos los reportes, eliminar proyectos y gestionar el equipo.</div>
+              </div>
+              <div style="padding:14px;background:var(--dark4);border-radius:var(--radius-sm);border-left:3px solid var(--info);">
+                <div style="font-size:13px;font-weight:600;color:var(--info);margin-bottom:4px;">Gerente</div>
+                <div style="font-size:12px;color:var(--text-muted);">Puede ver y editar todos los proyectos, ver reportes completos. No puede gestionar usuarios.</div>
+              </div>
+              <div style="padding:14px;background:var(--dark4);border-radius:var(--radius-sm);border-left:3px solid var(--success);">
+                <div style="font-size:13px;font-weight:600;color:var(--success);margin-bottom:4px;">Agente</div>
+                <div style="font-size:12px;color:var(--text-muted);">Puede crear y editar proyectos asignados, usar la calculadora y registrar gastos y fotos.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: ROLES -->
+      <div id="tab-roles" class="tab-section">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Matriz de permisos</div></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Funcionalidad</th>
+                  <th style="text-align:center">Agente</th>
+                  <th style="text-align:center">Gerente</th>
+                  <th style="text-align:center">Admin</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${[
+                  ['Ver dashboard y reportes', '✓', '✓', '✓'],
+                  ['Usar calculadora', '✓', '✓', '✓'],
+                  ['Crear proyectos', '✓', '✓', '✓'],
+                  ['Editar proyectos', '✓', '✓', '✓'],
+                  ['Subir fotos', '✓', '✓', '✓'],
+                  ['Registrar gastos', '✓', '✓', '✓'],
+                  ['Seguimiento remodelación', '✓', '✓', '✓'],
+                  ['Eliminar proyectos', '✗', '✓', '✓'],
+                  ['Ver reportes completos', '✗', '✓', '✓'],
+                  ['Gestionar usuarios', '✗', '✗', '✓'],
+                  ['Panel administración', '✗', '✗', '✓'],
+                ].map(([f,a,g,ad]) => `<tr>
+                  <td class="primary">${f}</td>
+                  <td style="text-align:center;color:${a==='✓'?'var(--success)':'var(--danger)'};">${a}</td>
+                  <td style="text-align:center;color:${g==='✓'?'var(--success)':'var(--danger)'};">${g}</td>
+                  <td style="text-align:center;color:${ad==='✓'?'var(--success)':'var(--danger)'};">${ad}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- EDIT USER MODAL -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-header">
+      <div class="modal-title">Editar usuario</div>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="closeEditModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <div class="field mb-2">
+        <label>Nombre completo</label>
+        <input type="text" id="edit-nombre" placeholder="Nombre">
+      </div>
+      <div class="field mb-2">
+        <label>Rol</label>
+        <select id="edit-rol">
+          <option value="agente">Agente</option>
+          <option value="gerente">Gerente</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <div class="field mb-2">
+        <label>Nueva contraseña (dejar vacío para no cambiar)</label>
+        <input type="password" id="edit-pass" placeholder="Nueva contraseña">
+      </div>
+      <div class="msg" id="msg-edit"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" onclick="deleteUsuario()">Eliminar usuario</button>
+      <button class="btn btn-outline" onclick="closeEditModal()">Cancelar</button>
+      <button class="btn btn-gold" onclick="saveUsuario()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_EMAIL = 'gerencia@brinversiones.co';
+let usuarios = [];
+
+async function initPage() {
+  const session = await requireAuth();
+  if (!session) return;
+  
+  // Only admin can access
+  if (session.user.email !== ADMIN_EMAIL) {
+    // Check if user has admin role in perfiles
+    const { data: perfil } = await _sbClient.from('perfiles').select('rol').eq('id', session.user.id).single();
+    if (!perfil || perfil.rol !== 'admin') {
+      toast('No tienes permisos para acceder a esta sección', 'error');
+      setTimeout(() => location.href = 'dashboard.html', 1500);
+      return;
+    }
+  }
+  
+  const nombre = session.user.user_metadata?.nombre || session.user.email.split('@')[0];
+  $('user-nm').textContent = nombre;
+  $('user-av').textContent = nombre[0].toUpperCase();
+  
+  await cargarUsuarios();
+}
+
+function switchTab(tab) {
+  $$('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['usuarios','nuevo','roles'][i] === tab);
+  });
+  $$('.tab-section').forEach(s => s.classList.remove('active'));
+  $('tab-' + tab).classList.add('active');
+}
+
+async function cargarUsuarios() {
+  const { data, error } = await _sbClient.from('perfiles').select('*').order('created_at', { ascending: false });
+  if (error) { console.error(error); return; }
+  usuarios = data || [];
+  renderUsuarios();
+  renderStats();
+}
+
+function renderUsuarios() {
+  const el = $('lista-usuarios-admin');
+  $('user-count').textContent = usuarios.length + ' usuario' + (usuarios.length !== 1 ? 's' : '');
+  
+  if (!usuarios.length) {
+    el.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-dim);">Sin usuarios registrados aún.</div>';
+    return;
+  }
+  
+  el.innerHTML = usuarios.map(u => `
+    <div class="user-row-admin">
+      <div class="user-avatar" style="width:38px;height:38px;font-size:14px;flex-shrink:0;">${(u.nombre||'U')[0].toUpperCase()}</div>
+      <div class="user-info">
+        <div class="user-name-a">${u.nombre || 'Sin nombre'}</div>
+        <div class="user-email-a">${u.empresa || 'B&R Inversiones'}</div>
+      </div>
+      <span class="role-badge role-${u.rol || 'agente'}">${(u.rol||'agente').charAt(0).toUpperCase()+(u.rol||'agente').slice(1)}</span>
+      <div class="action-btns">
+        <button class="btn btn-outline btn-sm" onclick="openEditModal('${u.id}','${(u.nombre||'').replace(/'/g,"\\'")}','${u.rol||'agente'}')">Editar</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderStats() {
+  $('st-total').textContent = usuarios.length;
+  $('st-admin').textContent = usuarios.filter(u => u.rol === 'admin').length;
+  $('st-gerente').textContent = usuarios.filter(u => u.rol === 'gerente').length;
+  $('st-agente').textContent = usuarios.filter(u => !u.rol || u.rol === 'agente').length;
+}
+
+async function crearUsuario() {
+  const nombre = $('new-nombre').value.trim();
+  const email = $('new-email').value.trim();
+  const pass = $('new-pass').value;
+  const rol = $('new-rol').value;
+  
+  if (!nombre || !email || !pass) return showMsg('msg-crear', 'Completa todos los campos', 'error');
+  if (pass.length < 6) return showMsg('msg-crear', 'Contraseña mínimo 6 caracteres', 'error');
+  
+  const btn = $('btn-crear');
+  btn.disabled = true; btn.textContent = 'Creando...';
+  
+  const { data, error } = await _sbClient.auth.signUp({
+    email, password: pass,
+    options: { data: { nombre } }
+  });
+  
+  if (error) {
+    showMsg('msg-crear', 'Error: ' + error.message, 'error');
+  } else if (data.user) {
+    // Save profile with role
+    await _sbClient.from('perfiles').upsert({
+      id: data.user.id,
+      nombre, rol, empresa: 'B&R Inversiones'
+    });
+    showMsg('msg-crear', `✓ Usuario ${nombre} creado con rol ${rol}.`, 'success');
+    $('new-nombre').value = ''; $('new-email').value = ''; $('new-pass').value = '';
+    await cargarUsuarios();
+  }
+  
+  btn.disabled = false; btn.textContent = 'Crear usuario';
+}
+
+function openEditModal(id, nombre, rol) {
+  $('edit-id').value = id;
+  $('edit-nombre').value = nombre;
+  $('edit-rol').value = rol;
+  $('edit-pass').value = '';
+  $('modal-edit').classList.add('open');
+}
+
+function closeEditModal() { $('modal-edit').classList.remove('open'); }
+
+async function saveUsuario() {
+  const id = $('edit-id').value;
+  const nombre = $('edit-nombre').value.trim();
+  const rol = $('edit-rol').value;
+  const pass = $('edit-pass').value;
+  
+  // Update profile
+  const { error } = await _sbClient.from('perfiles').update({ nombre, rol }).eq('id', id);
+  if (error) { showMsg('msg-edit', 'Error: ' + error.message, 'error'); return; }
+  
+  showMsg('msg-edit', '✓ Usuario actualizado correctamente.', 'success');
+  setTimeout(() => { closeEditModal(); cargarUsuarios(); }, 1000);
+}
+
+async function deleteUsuario() {
+  const id = $('edit-id').value;
+  const nombre = $('edit-nombre').value;
+  if (!confirm(`¿Eliminar a ${nombre}? Esta acción no se puede deshacer.`)) return;
+  
+  const { error } = await _sbClient.from('perfiles').delete().eq('id', id);
+  if (error) { showMsg('msg-edit', 'Error: ' + error.message, 'error'); return; }
+  
+  toast('Usuario eliminado', 'info');
+  closeEditModal();
+  await cargarUsuarios();
+}
+
+function showMsg(id, text, type) {
+  const el = $(id);
+  el.textContent = text;
+  el.className = 'msg ' + type + ' show';
+}
+
+// Render permissions table
+document.querySelector('tbody').innerHTML = [
+  ['Ver dashboard y reportes', '✓', '✓', '✓'],
+  ['Usar calculadora', '✓', '✓', '✓'],
+  ['Crear proyectos', '✓', '✓', '✓'],
+  ['Editar proyectos', '✓', '✓', '✓'],
+  ['Subir fotos', '✓', '✓', '✓'],
+  ['Registrar gastos', '✓', '✓', '✓'],
+  ['Seguimiento remodelación', '✓', '✓', '✓'],
+  ['Eliminar proyectos', '✗', '✓', '✓'],
+  ['Ver reportes completos', '✗', '✓', '✓'],
+  ['Gestionar usuarios', '✗', '✗', '✓'],
+  ['Panel administración', '✗', '✗', '✓'],
+].map(([f,a,g,ad]) => `<tr>
+  <td class="primary">${f}</td>
+  <td style="text-align:center;color:${a==='✓'?'var(--success)':'var(--danger)'};">${a}</td>
+  <td style="text-align:center;color:${g==='✓'?'var(--success)':'var(--danger)'};">${g}</td>
+  <td style="text-align:center;color:${ad==='✓'?'var(--success)':'var(--danger)'};">${ad}</td>
+</tr>`).join('');
+
+document.getElementById('modal-edit').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-edit')) closeEditModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditModal(); });
+</script>
+</body>
+</html>

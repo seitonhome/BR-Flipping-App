@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&R Inversiones — Detalle de proyecto</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<script src="js/app.js"></script>
+<style>
+.foto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 10px; margin-top: 1rem; }
+.foto-card {
+  aspect-ratio: 1; border-radius: var(--radius-sm); overflow: hidden;
+  background: var(--dark4); border: 1px solid var(--border-dim);
+  position: relative; cursor: pointer; transition: transform 0.2s;
+}
+.foto-card:hover { transform: scale(1.02); }
+.foto-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.foto-etapa {
+  position: absolute; bottom: 6px; left: 6px;
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  font-weight: 600; letter-spacing: 0.04em;
+}
+.etapa-antes { background: rgba(91,155,213,0.85); color: #fff; }
+.etapa-durante { background: rgba(232,168,60,0.85); color: #fff; }
+.etapa-despues { background: rgba(76,175,124,0.85); color: #fff; }
+.etapa-general { background: rgba(100,100,100,0.85); color: #fff; }
+
+.upload-zone {
+  border: 2px dashed var(--border-dim); border-radius: var(--radius);
+  padding: 2rem; text-align: center; cursor: pointer;
+  transition: border-color 0.2s; margin-top: 1rem;
+}
+.upload-zone:hover { border-color: var(--gold); }
+.upload-zone input { display: none; }
+
+.etapa-remo {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: var(--dark4); border: 1px solid var(--border-dim);
+  border-radius: var(--radius); margin-bottom: 8px;
+  transition: border-color 0.2s;
+}
+.etapa-remo.done { border-color: rgba(76,175,124,0.3); background: rgba(76,175,124,0.05); }
+.etapa-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid var(--border-mid); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s;
+}
+.etapa-check.done { background: var(--success); border-color: var(--success); color: #fff; font-size: 12px; }
+.etapa-info { flex: 1; }
+.etapa-nombre { font-size: 14px; font-weight: 500; color: var(--text); }
+.etapa-det { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.progress-remo { height: 8px; background: var(--dark5); border-radius: 4px; overflow: hidden; margin: 1rem 0; }
+.progress-remo-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dark), var(--gold)); border-radius: 4px; transition: width 0.5s; }
+
+.gasto-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border-dim);
+  font-size: 13px;
+}
+.gasto-row:last-child { border-bottom: none; }
+.gasto-cat {
+  padding: 2px 8px; border-radius: 10px; font-size: 10px;
+  font-weight: 600; flex-shrink: 0;
+}
+.cat-remodelacion { background: rgba(201,168,76,0.12); color: var(--gold); }
+.cat-notarial { background: rgba(91,155,213,0.12); color: var(--info); }
+.cat-comision { background: rgba(165,133,232,0.12); color: #A585E8; }
+.cat-impuesto { background: rgba(224,85,85,0.12); color: var(--danger); }
+.cat-otro { background: var(--dark5); color: var(--text-muted); }
+
+.kpi-project { 
+  background: var(--dark3); border: 1px solid var(--border-dim);
+  border-radius: var(--radius); padding: 1rem 1.25rem;
+}
+.kpi-project-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.kpi-project-value { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+
+/* Lightbox */
+.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: var(--radius); }
+.lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 28px; cursor: pointer; background: none; border: none; }
+</style>
+</head>
+<body>
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo" style="flex-direction:column;align-items:center;padding:1.25rem 1rem;gap:10px;">
+      <img src="assets/logo.png" alt="B&R Inversiones" style="width:108px;height:108px;border-radius:20px;object-fit:cover;">
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);text-align:center;">B<span style="color:var(--gold)">&amp;R</span> Inversiones</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Principal</div>
+      <button class="nav-item" onclick="location.href='dashboard.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item active" onclick="location.href='proyectos.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>
+        Proyectos
+      </button>
+      <button class="nav-item" onclick="location.href='calculadora.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>
+        Calculadora
+      </button>
+      <div class="nav-label">Reportes</div>
+      <button class="nav-item" onclick="location.href='reportes.html'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Reportes & KPIs
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card" onclick="doLogout()">
+        <div class="user-avatar" id="user-av">?</div>
+        <div><div class="user-name" id="user-nm">Cargando...</div><div class="user-role">Cerrar sesión</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <button class="btn btn-ghost btn-sm" onclick="location.href='proyectos.html'">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Proyectos
+      </button>
+      <div class="topbar-title" id="page-title">Cargando...</div>
+      <div class="topbar-actions">
+        <span class="badge" id="estado-badge"></span>
+      </div>
+    </div>
+
+    <div class="page-content" id="main-content" style="display:none;">
+      
+      <!-- KPIs del proyecto -->
+      <div class="grid-4 mb-3" id="kpis-proyecto"></div>
+
+      <!-- TABS -->
+      <div class="tabs mb-3">
+        <button class="tab-btn active" onclick="switchTab('general')">General</button>
+        <button class="tab-btn" onclick="switchTab('remodelacion')">Remodelación</button>
+        <button class="tab-btn" onclick="switchTab('fotos')">Fotos</button>
+        <button class="tab-btn" onclick="switchTab('gastos')">Gastos reales</button>
+      </div>
+
+      <!-- TAB GENERAL -->
+      <div id="tab-general" class="tab-panel active">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Información del proyecto</div></div>
+            <div id="info-proyecto"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Actualizar estado</div></div>
+            <div class="field mb-2">
+              <label>Estado actual</label>
+              <select id="sel-estado">
+                <option value="evaluacion">Evaluación</option>
+                <option value="comprado">Comprado</option>
+                <option value="remodelacion">En remodelación</option>
+                <option value="en_venta">En venta</option>
+                <option value="vendido">Vendido</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+            <div class="field mb-2" id="campo-precio-real" style="display:none;">
+              <label>Precio de venta real (COP)</label>
+              <input type="text" id="inp-precio-real" placeholder="400.000.000" oninput="fmtInput(this)">
+            </div>
+            <div class="field mb-2" id="campo-fecha-venta" style="display:none;">
+              <label>Fecha de venta</label>
+              <input type="date" id="inp-fecha-venta">
+            </div>
+            <div class="field mb-2">
+              <label>Notas</label>
+              <textarea id="inp-notas" style="width:100%;min-height:80px;background:var(--dark4);border:1px solid var(--border-dim);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px;outline:none;resize:vertical;"></textarea>
+            </div>
+            <button class="btn btn-gold" onclick="guardarCambios()">Guardar cambios</button>
+            <div class="msg mt-1" id="msg-general"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB REMODELACION -->
+      <div id="tab-remodelacion" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Progreso de remodelación</div>
+                <div class="card-sub" id="remo-pct-label">0% completado</div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="agregarEtapa()">+ Etapa</button>
+            </div>
+            <div class="progress-remo"><div class="progress-remo-fill" id="remo-bar" style="width:0%"></div></div>
+            <div id="lista-etapas">
+              <div style="text-align:center;padding:2rem;color:var(--text-dim);">Cargando etapas...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Resumen financiero de obra</div></div>
+            <div id="resumen-remo"></div>
+            <div class="divider"></div>
+            <div class="card-title mb-2" style="font-size:14px;">Agregar etapa de obra</div>
+            <div class="field mb-2">
+              <label>Nombre de la etapa</label>
+              <input type="text" id="etapa-nombre" placeholder="Ej: Demolición, Pisos, Pintura...">
+            </div>
+            <div class="field mb-2">
+              <label>Costo estimado (COP)</label>
+              <input type="text" id="etapa-costo" placeholder="5.000.000" oninput="fmtInput(this)">
+            </div>
+            <div class="field mb-2">
+              <label>Responsable</label>
+              <input type="text" id="etapa-resp" placeholder="Nombre del contratista">
+            </div>
+            <button class="btn btn-gold btn-sm" onclick="crearEtapa()">Agregar etapa</button>
+            <div class="msg mt-1" id="msg-etapa"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB FOTOS -->
+      <div id="tab-fotos" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Galería de fotos</div>
+            <div style="display:flex;gap:8px;">
+              <select id="filter-etapa" onchange="filtrarFotos()" style="height:32px;padding:0 10px;background:var(--dark4);border:1px solid var(--border-dim);border-radius:8px;color:var(--text);font-size:13px;outline:none;">
+                <option value="">Todas</option>
+                <option value="antes">Antes</option>
+                <option value="durante">Durante</option>
+                <option value="despues">Después</option>
+                <option value="general">General</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Upload zone -->
+          <div class="upload-zone" onclick="$('file-input').click()">
+            <input type="file" id="file-input" multiple accept="image/*" onchange="subirFotos(this)">
+            <div style="font-size:32px;margin-bottom:8px;">📷</div>
+            <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;">Arrastra fotos aquí o haz clic para seleccionar</div>
+            <div style="font-size:12px;color:var(--text-muted);">JPG, PNG · Máx 5MB por foto</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+              <select id="etapa-foto" style="height:32px;padding:0 10px;background:var(--dark4);border:1px solid var(--border-dim);border-radius:8px;color:var(--text);font-size:13px;outline:none;" onclick="event.stopPropagation()">
+                <option value="general">General</option>
+                <option value="antes">Antes</option>
+                <option value="durante">Durante</option>
+                <option value="despues">Después</option>
+              </select>
+              <span style="font-size:13px;color:var(--text-muted);line-height:32px;">← Selecciona la etapa</span>
+            </div>
+          </div>
+          
+          <div id="upload-progress" style="display:none;margin-top:1rem;">
+            <div class="progress-track"><div class="progress-fill" id="upload-bar" style="width:0%"></div></div>
+            <div class="text-sm text-muted mt-1" id="upload-label">Subiendo...</div>
+          </div>
+          
+          <div id="foto-grid" class="foto-grid"></div>
+        </div>
+      </div>
+
+      <!-- TAB GASTOS REALES -->
+      <div id="tab-gastos" class="tab-panel">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Registrar gasto</div>
+            </div>
+            <div class="field mb-2">
+              <label>Categoría</label>
+              <select id="gasto-cat">
+                <option value="remodelacion">Remodelación / Obra</option>
+                <option value="notarial">Gastos notariales</option>
+                <option value="comision">Comisión inmobiliaria</option>
+                <option value="impuesto">Impuestos</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="field mb-2">
+              <label>Concepto *</label>
+              <input type="text" id="gasto-concepto" placeholder="Ej: Factura pisos, Honorarios notaría...">
+            </div>
+            <div class="field mb-2">
+              <label>Monto (COP) *</label>
+              <input type="text" id="gasto-monto" placeholder="1.500.000" oninput="fmtInput(this)">
+            </div>
+            <div class="field mb-2">
+              <label>Fecha</label>
+              <input type="date" id="gasto-fecha">
+            </div>
+            <div class="field mb-2">
+              <label>Notas</label>
+              <input type="text" id="gasto-notas" placeholder="Observaciones opcionales">
+            </div>
+            <button class="btn btn-gold" onclick="registrarGasto()">Registrar gasto</button>
+            <div class="msg mt-1" id="msg-gasto"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Gastos registrados</div>
+              <span class="text-muted text-sm" id="total-gastos-label">Total: $0</span>
+            </div>
+            <div id="lista-gastos">
+              <div style="text-align:center;padding:2rem;color:var(--text-dim);">Sin gastos registrados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="Foto proyecto">
+</div>
+
+<script>
+const ESTADOS = { evaluacion:'Evaluación', comprado:'Comprado', remodelacion:'En remodelación', en_venta:'En venta', vendido:'Vendido', cancelado:'Cancelado' };
+let proyectoId = null;
+let proyecto = null;
+let todasFotos = [];
+
+async function initPage() {
+  const session = await requireAuth();
+  if (!session) return;
+  
+  const nombre = session.user.user_metadata?.nombre || session.user.email.split('@')[0];
+  $('user-nm').textContent = nombre;
+  $('user-av').textContent = nombre[0].toUpperCase();
+  
+  // Get project ID from URL
+  const params = new URLSearchParams(location.search);
+  proyectoId = params.get('id');
+  if (!proyectoId) { location.href = 'proyectos.html'; return; }
+  
+  await cargarProyecto();
+  $('main-content').style.display = '';
+  
+  // Set today as default date for gasto
+  $('gasto-fecha').value = new Date().toISOString().split('T')[0];
+  
+  // Show precio real field when vendido selected
+  $('sel-estado').addEventListener('change', function() {
+    const isVendido = this.value === 'vendido';
+    $('campo-precio-real').style.display = isVendido ? '' : 'none';
+    $('campo-fecha-venta').style.display = isVendido ? '' : 'none';
+  });
+}
+
+async function cargarProyecto() {
+  const { data, error } = await _sbClient.from('proyectos').select('*').eq('id', proyectoId).single();
+  if (error || !data) { location.href = 'proyectos.html'; return; }
+  proyecto = data;
+  renderProyecto();
+  await Promise.all([cargarEtapas(), cargarFotos(), cargarGastos()]);
+}
+
+function renderProyecto() {
+  const p = proyecto;
+  $('page-title').textContent = p.nombre;
+  $('estado-badge').className = `badge badge-${p.estado}`;
+  $('estado-badge').textContent = ESTADOS[p.estado] || p.estado;
+  $('sel-estado').value = p.estado;
+  $('inp-notas').value = p.notas || '';
+  
+  // KPIs
+  const margenColor = (p.margen_neto||0) >= 25 ? 'var(--success)' : (p.margen_neto||0) >= 20 ? 'var(--warning)' : 'var(--danger)';
+  $('kpis-proyecto').innerHTML = `
+    <div class="kpi-project"><div class="kpi-project-label">Precio de compra</div><div class="kpi-project-value text-gold">${fmtCOPShort(p.precio_compra)}</div></div>
+    <div class="kpi-project"><div class="kpi-project-label">Precio venta objetivo</div><div class="kpi-project-value">${fmtCOPShort(p.precio_venta_objetivo)}</div></div>
+    <div class="kpi-project"><div class="kpi-project-label">Margen neto proyectado</div><div class="kpi-project-value" style="color:${margenColor}">${p.margen_neto ? fmtPct(p.margen_neto) : '—'}</div></div>
+    <div class="kpi-project"><div class="kpi-project-label">Utilidad neta proyectada</div><div class="kpi-project-value" style="color:${(p.utilidad_neta||0)>=0?'var(--success)':'var(--danger)'}">${fmtCOPShort(p.utilidad_neta)}</div></div>
+  `;
+  
+  // Info
+  $('info-proyecto').innerHTML = [
+    ['Dirección', p.direccion || '—'],
+    ['Ciudad', p.ciudad || '—'],
+    ['Tipo de inmueble', p.tipo_inmueble || '—'],
+    ['Área', p.metros_cuadrados ? p.metros_cuadrados + ' m²' : '—'],
+    ['Estrato', p.estrato || '—'],
+    ['Fecha de compra', fmtDate(p.fecha_compra)],
+    ['Fecha de venta', fmtDate(p.fecha_venta)],
+    ['Duración estimada', p.duracion_meses ? p.duracion_meses + ' meses' : '—'],
+    ['Remodelación presupuestada', fmtCOP(p.costo_remodelacion_presupuestado)],
+    ['Retención en la fuente', fmtCOP(p.retencion_fuente)],
+    ['Impuesto sobre utilidad', fmtCOP(p.impuesto_ganancia)],
+  ].map(([l,v]) => `<div style="display:flex;padding:7px 0;border-bottom:1px solid var(--border-dim);font-size:13px;"><span style="flex:1;color:var(--text-muted);">${l}</span><span style="font-weight:500;color:var(--text);">${v}</span></div>`).join('');
+}
+
+async function guardarCambios() {
+  const estado = $('sel-estado').value;
+  const notas = $('inp-notas').value;
+  const updates = { estado, notas };
+  
+  if (estado === 'vendido') {
+    const precioReal = parseInput('inp-precio-real');
+    const fechaVenta = $('inp-fecha-venta').value;
+    if (precioReal) {
+      updates.precio_venta_real = precioReal;
+      // Recalculate real KPIs
+      const invTotal = proyecto.inversion_total || proyecto.precio_compra;
+      const utilReal = precioReal - invTotal - (proyecto.gastos_notariales_venta||0) - (proyecto.retencion_fuente||0) - (proyecto.impuesto_ganancia||0);
+      updates.utilidad_neta = Math.round(utilReal);
+      updates.margen_neto = Math.round(utilReal / precioReal * 1000) / 10;
+      updates.roi = Math.round(utilReal / (invTotal||1) * 1000) / 10;
+    }
+    if (fechaVenta) updates.fecha_venta = fechaVenta;
+  }
+  
+  const { error } = await _sbClient.from('proyectos').update(updates).eq('id', proyectoId);
+  if (error) { showMsg('msg-general', 'Error: ' + error.message, 'error'); return; }
+  
+  toast('Proyecto actualizado', 'success');
+  await cargarProyecto();
+}
+
+// ---- REMODELACION ----
+const ETAPAS_DEFAULT = [
+  'Demolición y limpieza', 'Estructura y mampostería', 'Instalaciones eléctricas',
+  'Instalaciones hidráulicas', 'Pisos y revestimientos', 'Cocina y baños',
+  'Pintura y acabados', 'Carpintería y puertas', 'Limpieza final y entrega'
+];
+
+async function cargarEtapas() {
+  const { data } = await _sbClient.from('remodelacion_etapas').select('*').eq('proyecto_id', proyectoId).order('orden');
+  
+  // If no etapas, create defaults
+  if (!data || !data.length) {
+    const rows = ETAPAS_DEFAULT.map((e, i) => ({ proyecto_id: proyectoId, etapa: e, orden: i, completada: false, costo_estimado: 0 }));
+    await _sbClient.from('remodelacion_etapas').insert(rows);
+    const { data: newData } = await _sbClient.from('remodelacion_etapas').select('*').eq('proyecto_id', proyectoId).order('orden');
+    renderEtapas(newData || []);
+  } else {
+    renderEtapas(data);
+  }
+}
+
+function renderEtapas(etapas) {
+  const completadas = etapas.filter(e => e.completada).length;
+  const pct = etapas.length > 0 ? Math.round(completadas / etapas.length * 100) : 0;
+  $('remo-bar').style.width = pct + '%';
+  $('remo-pct-label').textContent = `${pct}% completado (${completadas}/${etapas.length} etapas)`;
+  
+  const totalEst = etapas.reduce((s,e) => s + (e.costo_estimado||0), 0);
+  const totalReal = etapas.reduce((s,e) => s + (e.costo_real||0), 0);
+  $('resumen-remo').innerHTML = `
+    <div style="display:flex;padding:8px 0;border-bottom:1px solid var(--border-dim);font-size:13px;"><span style="flex:1;color:var(--text-muted);">Costo estimado total</span><span style="font-weight:500;">${fmtCOP(totalEst)}</span></div>
+    <div style="display:flex;padding:8px 0;border-bottom:1px solid var(--border-dim);font-size:13px;"><span style="flex:1;color:var(--text-muted);">Costo real registrado</span><span style="font-weight:500;color:${totalReal > totalEst ? 'var(--danger)' : 'var(--success)'};">${fmtCOP(totalReal)}</span></div>
+    <div style="display:flex;padding:8px 0;font-size:13px;"><span style="flex:1;color:var(--text-muted);">Presupuestado en calculadora</span><span style="font-weight:500;">${fmtCOP(proyecto.costo_remodelacion_presupuestado)}</span></div>
+  `;
+  
+  $('lista-etapas').innerHTML = etapas.map(e => `
+    <div class="etapa-remo ${e.completada ? 'done' : ''}" id="etapa-${e.id}">
+      <div class="etapa-check ${e.completada ? 'done' : ''}" onclick="toggleEtapa('${e.id}', ${!e.completada})">
+        ${e.completada ? '✓' : ''}
+      </div>
+      <div class="etapa-info">
+        <div class="etapa-nombre" style="${e.completada ? 'text-decoration:line-through;opacity:0.6;' : ''}">${e.etapa}</div>
+        <div class="etapa-det">
+          ${e.responsable ? `👷 ${e.responsable} · ` : ''}
+          ${e.costo_estimado ? `Estimado: ${fmtCOPShort(e.costo_estimado)}` : 'Sin costo estimado'}
+          ${e.costo_real ? ` · Real: ${fmtCOPShort(e.costo_real)}` : ''}
+        </div>
+      </div>
+      ${e.completada ? '<span style="font-size:11px;color:var(--success);font-weight:500;">✓ Completada</span>' : ''}
+    </div>
+  `).join('');
+}
+
+async function toggleEtapa(id, completada) {
+  await _sbClient.from('remodelacion_etapas').update({ completada, fecha_fin: completada ? new Date().toISOString().split('T')[0] : null }).eq('id', id);
+  await cargarEtapas();
+}
+
+async function crearEtapa() {
+  const etapa = $('etapa-nombre').value.trim();
+  const costo = parseInput('etapa-costo');
+  const resp = $('etapa-resp').value.trim();
+  if (!etapa) { showMsg('msg-etapa', 'Ingresa el nombre de la etapa', 'error'); return; }
+  
+  const { data: existing } = await _sbClient.from('remodelacion_etapas').select('orden').eq('proyecto_id', proyectoId).order('orden', { ascending: false }).limit(1);
+  const orden = existing && existing.length ? existing[0].orden + 1 : 0;
+  
+  const { error } = await _sbClient.from('remodelacion_etapas').insert({ proyecto_id: proyectoId, etapa, orden, costo_estimado: costo, responsable: resp });
+  if (error) { showMsg('msg-etapa', 'Error: ' + error.message, 'error'); return; }
+  
+  $('etapa-nombre').value = ''; $('etapa-costo').value = ''; $('etapa-resp').value = '';
+  toast('Etapa agregada', 'success');
+  await cargarEtapas();
+}
+
+// ---- FOTOS ----
+async function cargarFotos() {
+  const { data } = await _sbClient.from('fotos').select('*').eq('proyecto_id', proyectoId).order('created_at', { ascending: false });
+  todasFotos = data || [];
+  renderFotos(todasFotos);
+}
+
+function filtrarFotos() {
+  const filtro = $('filter-etapa').value;
+  const filtered = filtro ? todasFotos.filter(f => f.etapa === filtro) : todasFotos;
+  renderFotos(filtered);
+}
+
+function renderFotos(fotos) {
+  const grid = $('foto-grid');
+  if (!fotos.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-dim);">Sin fotos aún. Sube las primeras fotos del proyecto.</div>';
+    return;
+  }
+  grid.innerHTML = fotos.map(f => `
+    <div class="foto-card" onclick="openLightbox('${f.url}')">
+      <img src="${f.url}" alt="${f.nombre||'Foto'}" loading="lazy" onerror="this.src='assets/logo.png'">
+      <span class="foto-etapa etapa-${f.etapa||'general'}">${f.etapa||'general'}</span>
+    </div>
+  `).join('');
+}
+
+async function subirFotos(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  
+  const etapa = $('etapa-foto').value;
+  $('upload-progress').style.display = '';
+  
+  let subidas = 0;
+  for (const file of files) {
+    if (file.size > 5 * 1024 * 1024) { toast(`${file.name} supera 5MB`, 'error'); continue; }
+    
+    $('upload-label').textContent = `Subiendo ${file.name}...`;
+    
+    // Convert to base64 and store URL in DB
+    // Using Supabase Storage if available, otherwise base64
+    const reader = new FileReader();
+    await new Promise(resolve => {
+      reader.onload = async (e) => {
+        const base64url = e.target.result;
+        await _sbClient.from('fotos').insert({
+          proyecto_id: proyectoId,
+          url: base64url,
+          nombre: file.name,
+          etapa: etapa
+        });
+        subidas++;
+        $('upload-bar').style.width = (subidas / files.length * 100) + '%';
+        resolve();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  $('upload-progress').style.display = 'none';
+  $('upload-bar').style.width = '0%';
+  input.value = '';
+  toast(`${subidas} foto(s) subida(s)`, 'success');
+  await cargarFotos();
+}
+
+function openLightbox(url) {
+  $('lightbox-img').src = url;
+  $('lightbox').classList.add('open');
+}
+function closeLightbox() { $('lightbox').classList.remove('open'); }
+
+// ---- GASTOS REALES ----
+async function cargarGastos() {
+  const { data } = await _sbClient.from('gastos_reales').select('*').eq('proyecto_id', proyectoId).order('fecha', { ascending: false });
+  renderGastos(data || []);
+}
+
+function renderGastos(gastos) {
+  const total = gastos.reduce((s,g) => s + (g.monto||0), 0);
+  $('total-gastos-label').textContent = 'Total: ' + fmtCOP(total);
+  
+  if (!gastos.length) {
+    $('lista-gastos').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-dim);">Sin gastos registrados</div>';
+    return;
+  }
+  
+  $('lista-gastos').innerHTML = gastos.map(g => `
+    <div class="gasto-row">
+      <span class="gasto-cat cat-${g.categoria}">${g.categoria}</span>
+      <div style="flex:1;">
+        <div style="font-weight:500;color:var(--text);font-size:13px;">${g.concepto}</div>
+        ${g.notas ? `<div style="font-size:11px;color:var(--text-dim);">${g.notas}</div>` : ''}
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:600;color:var(--text);font-size:13px;">${fmtCOP(g.monto)}</div>
+        <div style="font-size:11px;color:var(--text-dim);">${fmtDate(g.fecha)}</div>
+      </div>
+      <button onclick="eliminarGasto('${g.id}')" style="background:none;border:none;cursor:pointer;color:var(--text-dim);padding:4px;font-size:16px;" title="Eliminar">×</button>
+    </div>
+  `).join('');
+}
+
+async function registrarGasto() {
+  const concepto = $('gasto-concepto').value.trim();
+  const monto = parseInput('gasto-monto');
+  const categoria = $('gasto-cat').value;
+  const fecha = $('gasto-fecha').value;
+  const notas = $('gasto-notas').value.trim();
+  
+  if (!concepto || !monto) { showMsg('msg-gasto', 'Ingresa concepto y monto', 'error'); return; }
+  
+  const { error } = await _sbClient.from('gastos_reales').insert({ proyecto_id: proyectoId, concepto, monto, categoria, fecha, notas });
+  if (error) { showMsg('msg-gasto', 'Error: ' + error.message, 'error'); return; }
+  
+  $('gasto-concepto').value = ''; $('gasto-monto').value = ''; $('gasto-notas').value = '';
+  toast('Gasto registrado', 'success');
+  await cargarGastos();
+  
+  // Also update costo_real in remodelacion if category is remodelacion
+  if (categoria === 'remodelacion') await cargarEtapas();
+}
+
+async function eliminarGasto(id) {
+  if (!confirm('¿Eliminar este gasto?')) return;
+  await _sbClient.from('gastos_reales').delete().eq('id', id);
+  toast('Gasto eliminado', 'info');
+  await cargarGastos();
+}
+
+function showMsg(id, text, type) {
+  const el = $(id);
+  el.textContent = text;
+  el.className = 'msg ' + type + ' show';
+}
+
+function switchTab(tab) {
+  $$('.tab-btn').forEach((b, i) => b.classList.toggle('active', ['general','remodelacion','fotos','gastos'][i] === tab));
+  $$('.tab-panel').forEach(p => p.classList.remove('active'));
+  $('tab-' + tab).classList.add('active');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
